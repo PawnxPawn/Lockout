@@ -1,0 +1,21 @@
+{
+  "asset": { "version": "2.0" },
+  "scene": 0,
+  "scenes": [{ "nodes": [0,1,2] }],
+  "nodes": [{"mesh":0},{"mesh":1},{"mesh":2}],
+  "meshes": [{"primitives":[{"attributes":{"POSITION":0,"TEXCOORD_0":1},"indices":2,"material":0}]},{"primitives":[{"attributes":{"POSITION":3,"TEXCOORD_0":4},"indices":5,"material":0}]},{"primitives":[{"attributes":{"POSITION":6,"TEXCOORD_0":7},"indices":8,"material":0}]}],
+  "materials": [{
+    "name" : "unnamed_6",
+    "pbrMetallicRoughness": {
+      "baseColorTexture": { "index": 0 },
+      "metallicFactor": 0.0,
+      "roughnessFactor": 1.0
+    }
+  }],
+  "samplers": [{ "magFilter": 9728, "minFilter": 9728 }],
+  "textures": [{ "source": 0, "sampler": 0 }],
+  "images": [{ "uri": "unnamed_6.png" }],
+  "accessors": [{"bufferView":0,"byteOffset":0,"componentType":5126,"count":36,"type":"VEC3","min":[-0.666717035,1.25,-0.0604862569],"max":[-0.5,1.5,0.0480247239]},{"bufferView":1,"byteOffset":0,"componentType":5126,"count":36,"type":"VEC2"},{"bufferView":2,"byteOffset":0,"componentType":5123,"count":36,"type":"SCALAR"},{"bufferView":3,"byteOffset":0,"componentType":5126,"count":84,"type":"VEC3","min":[-0.587317259,2.75,-0.590864715],"max":[0.604233673,3.25,0.590864715]},{"bufferView":4,"byteOffset":0,"componentType":5126,"count":84,"type":"VEC2"},{"bufferView":5,"byteOffset":0,"componentType":5123,"count":84,"type":"SCALAR"},{"bufferView":6,"byteOffset":0,"componentType":5126,"count":132,"type":"VEC3","min":[-0.75,-0.725958605,-0.75],"max":[0.75,2.75,0.75]},{"bufferView":7,"byteOffset":0,"componentType":5126,"count":132,"type":"VEC2"},{"bufferView":8,"byteOffset":0,"componentType":5123,"count":132,"type":"SCALAR"}],
+  "bufferViews": [{"buffer":0,"byteOffset":0,"byteLength":432,"target":34962},{"buffer":0,"byteOffset":432,"byteLength":288,"target":34962},{"buffer":0,"byteOffset":720,"byteLength":72,"target":34963},{"buffer":0,"byteOffset":792,"byteLength":1008,"target":34962},{"buffer":0,"byteOffset":1800,"byteLength":672,"target":34962},{"buffer":0,"byteOffset":2472,"byteLength":168,"target":34963},{"buffer":0,"byteOffset":2640,"byteLength":1584,"target":34962},{"buffer":0,"byteOffset":4224,"byteLength":1056,"target":34962},{"buffer":0,"byteOffset":5280,"byteLength":264,"target":34963}],
+  "buffers": [{ "uri": "unnamed_6.bin", "byteLength": 5544 }]
+}
