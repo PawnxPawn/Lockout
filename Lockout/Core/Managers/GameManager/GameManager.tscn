@@ -1,7 +1,0 @@
-[gd_scene format=3 uid="uid://bbb843krs7tb3"]
-
-[node name="Main" type="Node" unique_id=209543582]
-
-[node name="SceneManager" type="Node" parent="." unique_id=1099837046]
-
-[node name="UIManager" type="Node" parent="." unique_id=1266602656]

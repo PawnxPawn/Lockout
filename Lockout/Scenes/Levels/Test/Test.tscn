@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://cfpeosla7ei55"]
+
+[ext_resource type="Script" uid="uid://cnjqpw6ug4mmo" path="res://Scenes/Levels/Test/Test.gd" id="1_vykkw"]
+
+[node name="Test" type="Node3D" unique_id=870919375]
+script = ExtResource("1_vykkw")
+
+[node name="Label" type="Label" parent="." unique_id=1295334263]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 80
+text = "TEST"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="." unique_id=1221940548]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -172.0
+offset_top = 49.0
+offset_right = 174.0
+offset_bottom = 165.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Main Menu"
+
+[connection signal="button_down" from="Button" to="." method="_on_button_button_down"]

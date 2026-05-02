@@ -11,12 +11,19 @@ config_version=5
 [application]
 
 config/name="Lockout"
+run/main_scene="uid://bbb843krs7tb3"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
 Services="*uid://dh8h4635w4pvn"
+
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+window/stretch/mode="viewport"
 
 [editor]
 

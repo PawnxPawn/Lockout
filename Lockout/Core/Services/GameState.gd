@@ -2,9 +2,9 @@ class_name GameState
 extends Node
 
 signal game_state_changed(new_state: GameStates)
-signal game_paused()
-signal game_resumed()
-signal game_overed()
+signal game_paused
+signal game_resumed
+signal game_overed
 
 enum GameStates {
 	STARTUP,
@@ -72,14 +72,17 @@ func _game_over_state() -> void:
 
 func toggle_pause() -> void:
 	if _state_check(GameStates.PLAYING):
+		game_paused.emit()
 		change_game_state(GameStates.PAUSED)
 		return
 	if _state_check(GameStates.PAUSED):
+		game_resumed.emit()
 		change_game_state(GameStates.PLAYING)
 		return
 
 
 func game_over() -> void:
+	game_overed.emit()
 	change_game_state(GameStates.GAME_OVER)
 
 #Helpers
