@@ -2,48 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b4vs47x8xnwyl" path="res://Scenes/MainMenu/MainMenu.gd" id="1_c7oo3"]
 [ext_resource type="Texture2D" uid="uid://dft6mvjv1mrgb" path="res://Assets/Temp/AbandonBuilding.png" id="1_les83"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fe4vj"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_les83"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7rqq1"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ehq06"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gwdte"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7nukq"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tc2ed"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_67d64"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6swpd"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_u8hla"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tbwd8"]
-
-[sub_resource type="Theme" id="Theme_geava"]
-default_font_size = 40
-Button/colors/font_color = Color(1, 1, 1, 1)
-Button/colors/font_focus_color = Color(1, 0.36778843, 0.3002166, 1)
-Button/colors/font_hover_color = Color(1, 0.36862746, 0.3019608, 1)
-Button/colors/font_hover_pressed_color = Color(0.69411767, 0.039215688, 0.02745098, 1)
-Button/colors/font_pressed_color = Color(0.69411767, 0.039215688, 0.02745098, 1)
-Button/font_sizes/font_size = 40
-Button/styles/disabled = SubResource("StyleBoxEmpty_fe4vj")
-Button/styles/disabled_mirrored = SubResource("StyleBoxEmpty_les83")
-Button/styles/focus = SubResource("StyleBoxEmpty_7rqq1")
-Button/styles/hover = SubResource("StyleBoxEmpty_ehq06")
-Button/styles/hover_mirrored = SubResource("StyleBoxEmpty_gwdte")
-Button/styles/hover_pressed = SubResource("StyleBoxEmpty_7nukq")
-Button/styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_tc2ed")
-Button/styles/normal = SubResource("StyleBoxEmpty_67d64")
-Button/styles/normal_mirrored = SubResource("StyleBoxEmpty_6swpd")
-Button/styles/pressed = SubResource("StyleBoxEmpty_u8hla")
-Button/styles/pressed_mirrored = SubResource("StyleBoxEmpty_tbwd8")
+[ext_resource type="Theme" uid="uid://b38wub21ifo01" path="res://Assets/Themes/MainMenu.tres" id="3_sg7ab"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_vwuc7"]
 font_size = 80
@@ -70,7 +29,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_les83")
 
-[node name="Buttons" type="VBoxContainer" parent="." unique_id=146607823]
+[node name="Title" type="VBoxContainer" parent="." unique_id=146607823]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -80,10 +39,10 @@ offset_top = -724.0
 offset_right = 646.0
 offset_bottom = -124.43506
 grow_vertical = 0
-theme = SubResource("Theme_geava")
+theme = ExtResource("3_sg7ab")
 theme_override_constants/separation = 30
 
-[node name="Label" type="Label" parent="Buttons" unique_id=1422583510]
+[node name="Label" type="Label" parent="Title" unique_id=1422583510]
 layout_mode = 2
 text = "Locked In:
 The Final Bell"
@@ -91,32 +50,36 @@ label_settings = SubResource("LabelSettings_vwuc7")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="HSeparator" type="HSeparator" parent="Buttons" unique_id=895603831]
+[node name="HSeparator" type="HSeparator" parent="Title" unique_id=895603831]
 layout_mode = 2
 theme_override_styles/separator = SubResource("StyleBoxLine_fe4vj")
 
-[node name="NewGame" type="Button" parent="Buttons" unique_id=1151960490]
+[node name="Buttons" type="VBoxContainer" parent="Title" unique_id=1405050930]
+unique_name_in_owner = true
+layout_mode = 2
+theme = ExtResource("3_sg7ab")
+theme_override_constants/separation = 30
+
+[node name="NewGame" type="Button" parent="Title/Buttons" unique_id=1278232595]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "New Game"
 
-[node name="LoadGame" type="Button" parent="Buttons" unique_id=993108504]
+[node name="LoadGame" type="Button" parent="Title/Buttons" unique_id=1806859129]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "Load Game"
 
-[node name="Options" type="Button" parent="Buttons" unique_id=1544424885]
+[node name="Options" type="Button" parent="Title/Buttons" unique_id=1175784511]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "Options"
 
-[node name="Exit" type="Button" parent="Buttons" unique_id=859810830]
+[node name="Exit" type="Button" parent="Title/Buttons" unique_id=1159796078]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "Exit"
-
-[connection signal="button_down" from="Buttons/NewGame" to="." method="_on_new_game_button_down"]
