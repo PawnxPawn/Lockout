@@ -29,7 +29,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_les83")
 
-[node name="Buttons" type="VBoxContainer" parent="." unique_id=146607823]
+[node name="Title" type="VBoxContainer" parent="." unique_id=146607823]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -42,7 +42,7 @@ grow_vertical = 0
 theme = ExtResource("3_sg7ab")
 theme_override_constants/separation = 30
 
-[node name="Label" type="Label" parent="Buttons" unique_id=1422583510]
+[node name="Label" type="Label" parent="Title" unique_id=1422583510]
 layout_mode = 2
 text = "Locked In:
 The Final Bell"
@@ -50,32 +50,36 @@ label_settings = SubResource("LabelSettings_vwuc7")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="HSeparator" type="HSeparator" parent="Buttons" unique_id=895603831]
+[node name="HSeparator" type="HSeparator" parent="Title" unique_id=895603831]
 layout_mode = 2
 theme_override_styles/separator = SubResource("StyleBoxLine_fe4vj")
 
-[node name="NewGame" type="Button" parent="Buttons" unique_id=1151960490]
+[node name="Buttons" type="VBoxContainer" parent="Title" unique_id=1405050930]
+unique_name_in_owner = true
+layout_mode = 2
+theme = ExtResource("3_sg7ab")
+theme_override_constants/separation = 30
+
+[node name="NewGame" type="Button" parent="Title/Buttons" unique_id=1278232595]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "New Game"
 
-[node name="LoadGame" type="Button" parent="Buttons" unique_id=993108504]
+[node name="LoadGame" type="Button" parent="Title/Buttons" unique_id=1806859129]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "Load Game"
 
-[node name="Options" type="Button" parent="Buttons" unique_id=1544424885]
+[node name="Options" type="Button" parent="Title/Buttons" unique_id=1175784511]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "Options"
 
-[node name="Exit" type="Button" parent="Buttons" unique_id=859810830]
+[node name="Exit" type="Button" parent="Title/Buttons" unique_id=1159796078]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "Exit"
-
-[connection signal="button_down" from="Buttons/NewGame" to="." method="_on_new_game_button_down"]

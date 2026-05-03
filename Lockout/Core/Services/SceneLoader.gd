@@ -8,8 +8,8 @@ enum Scenes {
 }
 
 const _PRELOADED_SCENES = {
-	0: preload("uid://c11qt0vcye7g3"),
-	1: preload("uid://cfpeosla7ei55"),
+	Scenes.MAIN_MENU: preload("uid://c11qt0vcye7g3"),
+	Scenes.TEST: preload("uid://cfpeosla7ei55"),
 }
 
 const _DYNAMIC_SCENES: Dictionary = {

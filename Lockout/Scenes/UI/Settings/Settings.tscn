@@ -21,7 +21,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0, 0, 0, 0.09019608)
+color = Color(0, 0, 0, 0.32156864)
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=193269009]
 layout_mode = 1
@@ -320,24 +320,25 @@ layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 8
 
-[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer" unique_id=1788441545]
+[node name="SaveAndExit" type="HBoxContainer" parent="PanelContainer/VBoxContainer" unique_id=1788441545]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/separation = 50
 alignment = 2
 
-[node name="Apply" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer" unique_id=1976951985]
+[node name="Apply" type="Button" parent="PanelContainer/VBoxContainer/SaveAndExit" unique_id=1976951985]
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 8
 text = "Apply"
 
-[node name="Exit" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer" unique_id=382401302]
+[node name="Exit" type="Button" parent="PanelContainer/VBoxContainer/SaveAndExit" unique_id=382401302]
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 8
 text = "Exit"
 
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer/HBoxContainer" unique_id=1043332515]
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer/SaveAndExit" unique_id=1043332515]
 layout_mode = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer" unique_id=22667734]
