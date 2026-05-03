@@ -1,6 +1,6 @@
 class_name SceneLoader extends Node
 
-#TODO: Threaded loading, Chunk Loading
+#OPTIONAL : Threaded loading, Level Streaming
 
 enum Scenes {
 	MAIN_MENU,
@@ -13,7 +13,7 @@ const _PRELOADED_SCENES = {
 }
 
 const _DYNAMIC_SCENES: Dictionary = {
-	
+	#If we add level streaming
 }
 
 var scene_manager: Node
@@ -23,6 +23,8 @@ var _loaded_scenes:Dictionary = {}
 
 
 func load_scene(scene:Scenes, transition: bool = true) -> void:
+	if not scene_manager:
+		push_error("SceneLoader: %s can't load because SceneManager is not set.")
 	if transition:
 		is_transitioning = true
 		_swap_scene(scene)
@@ -56,3 +58,9 @@ func _clean_up() -> void:
 		for key in _loaded_scenes:
 			_loaded_scenes[key].queue_free()
 		_loaded_scenes.clear()
+
+func _scene_manager_check() -> bool:
+	if not scene_manager:
+		push_error("SceneLoader: Can't load new scenes because scene_manager is not set.")
+		return false
+	return true

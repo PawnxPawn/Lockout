@@ -1,0 +1,345 @@
+[gd_scene format=3 uid="uid://dxyeviydep8bt"]
+
+[ext_resource type="Script" uid="uid://cevo5kbt6tffn" path="res://Scenes/UI/Settings/GameSettings.gd" id="1_k8a8l"]
+[ext_resource type="Theme" uid="uid://b38wub21ifo01" path="res://Assets/Themes/MainMenu.tres" id="2_35ta1"]
+
+[node name="Settings" type="Control" unique_id=529336582]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_k8a8l")
+metadata/_edit_horizontal_guides_ = [113.0, 970.0]
+metadata/_edit_vertical_guides_ = [460.0, 1506.0]
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1163934571]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.09019608)
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=193269009]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -497.0
+offset_top = -427.0
+offset_right = 503.0
+offset_bottom = 423.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_35ta1")
+
+[node name="TabContainer" type="TabContainer" parent="PanelContainer" unique_id=1431926167]
+layout_mode = 2
+current_tab = 0
+
+[node name="Game Settings" type="Panel" parent="PanelContainer/TabContainer" unique_id=2101089136]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/TabContainer/Game Settings" unique_id=1643467195]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 55.0
+grow_horizontal = 2
+
+[node name="ExampleLayout" type="Label" parent="PanelContainer/TabContainer/Game Settings/VBoxContainer" unique_id=602190947]
+layout_mode = 2
+text = "*Example: Layout"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GridContainer" type="GridContainer" parent="PanelContainer/TabContainer/Game Settings" unique_id=1619835069]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -404.5
+offset_top = -345.5
+offset_right = 404.5
+offset_bottom = 345.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/v_separation = 20
+columns = 3
+
+[node name="Language" type="Label" parent="PanelContainer/TabContainer/Game Settings/GridContainer" unique_id=1393697999]
+layout_mode = 2
+text = "Language: "
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/TabContainer/Game Settings/GridContainer" unique_id=1887277701]
+layout_mode = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_right = 50
+
+[node name="OptionButton" type="OptionButton" parent="PanelContainer/TabContainer/Game Settings/GridContainer" unique_id=629674734]
+layout_mode = 2
+selected = 0
+item_count = 1
+popup/item_0/text = "English"
+popup/item_0/id = 0
+
+[node name="MouseSensitivity" type="Label" parent="PanelContainer/TabContainer/Game Settings/GridContainer" unique_id=1872415607]
+layout_mode = 2
+text = "Mouse Senitivity:"
+
+[node name="MarginContainer2" type="MarginContainer" parent="PanelContainer/TabContainer/Game Settings/GridContainer" unique_id=279439168]
+layout_mode = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_right = 50
+
+[node name="HSlider" type="HSlider" parent="PanelContainer/TabContainer/Game Settings/GridContainer" unique_id=1755587207]
+layout_mode = 2
+size_flags_vertical = 1
+
+[node name="GamepadSensitivity" type="Label" parent="PanelContainer/TabContainer/Game Settings/GridContainer" unique_id=987487543]
+layout_mode = 2
+text = "Gamepad Senitivity:"
+
+[node name="MarginContainer3" type="MarginContainer" parent="PanelContainer/TabContainer/Game Settings/GridContainer" unique_id=147211758]
+layout_mode = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_right = 50
+
+[node name="HSlider2" type="HSlider" parent="PanelContainer/TabContainer/Game Settings/GridContainer" unique_id=1877018090]
+layout_mode = 2
+size_flags_vertical = 1
+
+[node name="Audio" type="Panel" parent="PanelContainer/TabContainer" unique_id=1975207429]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/TabContainer/Audio" unique_id=1469279332]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = -170.5
+offset_right = 170.5
+offset_bottom = 55.0
+grow_horizontal = 2
+
+[node name="ExampleLayout" type="Label" parent="PanelContainer/TabContainer/Audio/VBoxContainer" unique_id=111544423]
+layout_mode = 2
+text = "*Example: Layout"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GridContainer" type="GridContainer" parent="PanelContainer/TabContainer/Audio" unique_id=1240843998]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -404.5
+offset_top = -345.5
+offset_right = 404.5
+offset_bottom = 345.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/v_separation = 20
+columns = 3
+
+[node name="Label" type="Label" parent="PanelContainer/TabContainer/Audio/GridContainer" unique_id=959671384]
+layout_mode = 2
+text = "Master Volume: "
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/TabContainer/Audio/GridContainer" unique_id=265229194]
+layout_mode = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_right = 50
+
+[node name="HSlider2" type="HSlider" parent="PanelContainer/TabContainer/Audio/GridContainer" unique_id=850225890]
+layout_mode = 2
+size_flags_vertical = 1
+
+[node name="Label2" type="Label" parent="PanelContainer/TabContainer/Audio/GridContainer" unique_id=694619423]
+layout_mode = 2
+text = "Music Volume: "
+
+[node name="MarginContainer2" type="MarginContainer" parent="PanelContainer/TabContainer/Audio/GridContainer" unique_id=1474338857]
+layout_mode = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_right = 50
+
+[node name="HSlider3" type="HSlider" parent="PanelContainer/TabContainer/Audio/GridContainer" unique_id=1493265391]
+layout_mode = 2
+size_flags_vertical = 1
+
+[node name="Label3" type="Label" parent="PanelContainer/TabContainer/Audio/GridContainer" unique_id=2027671410]
+layout_mode = 2
+text = "SFX Volume: "
+
+[node name="MarginContainer3" type="MarginContainer" parent="PanelContainer/TabContainer/Audio/GridContainer" unique_id=86321099]
+layout_mode = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_right = 50
+
+[node name="HSlider4" type="HSlider" parent="PanelContainer/TabContainer/Audio/GridContainer" unique_id=456884634]
+layout_mode = 2
+size_flags_vertical = 1
+
+[node name="Controls" type="Panel" parent="PanelContainer/TabContainer" unique_id=573372779]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/TabContainer/Controls" unique_id=2081004874]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 7.0
+offset_right = -1.0
+offset_bottom = 55.0
+grow_horizontal = 2
+
+[node name="ExampleLayout" type="Label" parent="PanelContainer/TabContainer/Controls/VBoxContainer" unique_id=1441212434]
+layout_mode = 2
+text = "*Example: Layout"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GridContainer" type="GridContainer" parent="PanelContainer/TabContainer/Controls" unique_id=480247088]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -404.5
+offset_top = -345.5
+offset_right = 404.5
+offset_bottom = 345.5
+grow_horizontal = 2
+grow_vertical = 2
+columns = 3
+
+[node name="Label" type="Label" parent="PanelContainer/TabContainer/Controls/GridContainer" unique_id=614063628]
+layout_mode = 2
+text = "Invert Camera: "
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/TabContainer/Controls/GridContainer" unique_id=1513116357]
+layout_mode = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_right = 50
+
+[node name="OptionButton" type="OptionButton" parent="PanelContainer/TabContainer/Controls/GridContainer" unique_id=895719632]
+layout_mode = 2
+selected = 0
+item_count = 2
+popup/item_0/text = "Yes"
+popup/item_0/id = 0
+popup/item_1/text = "No"
+popup/item_1/id = 1
+
+[node name="Graphics" type="Panel" parent="PanelContainer/TabContainer" unique_id=945323213]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/TabContainer/Graphics" unique_id=1181695418]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 55.0
+grow_horizontal = 2
+
+[node name="ExampleLayout" type="Label" parent="PanelContainer/TabContainer/Graphics/VBoxContainer" unique_id=68692797]
+layout_mode = 2
+text = "*Example: Layout"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GridContainer" type="GridContainer" parent="PanelContainer/TabContainer/Graphics" unique_id=272485752]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -404.5
+offset_top = -345.5
+offset_right = 404.5
+offset_bottom = 345.5
+grow_horizontal = 2
+grow_vertical = 2
+columns = 3
+
+[node name="Label" type="Label" parent="PanelContainer/TabContainer/Graphics/GridContainer" unique_id=653408649]
+layout_mode = 2
+text = "Resolution: "
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/TabContainer/Graphics/GridContainer" unique_id=186031324]
+layout_mode = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_right = 50
+
+[node name="OptionButton" type="OptionButton" parent="PanelContainer/TabContainer/Graphics/GridContainer" unique_id=1704920823]
+layout_mode = 2
+selected = 0
+item_count = 1
+popup/item_0/text = "1920x1080"
+popup/item_0/id = 0
+
+[node name="Label2" type="Label" parent="PanelContainer/TabContainer/Graphics/GridContainer" unique_id=813963367]
+layout_mode = 2
+text = "Quaity: "
+
+[node name="MarginContainer2" type="MarginContainer" parent="PanelContainer/TabContainer/Graphics/GridContainer" unique_id=1184393990]
+layout_mode = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_right = 50
+
+[node name="OptionButton2" type="OptionButton" parent="PanelContainer/TabContainer/Graphics/GridContainer" unique_id=651238092]
+layout_mode = 2
+selected = 0
+item_count = 1
+popup/item_0/text = "Ultra"
+popup/item_0/id = 0
+
+[node name="Label3" type="Label" parent="PanelContainer/TabContainer/Graphics/GridContainer" unique_id=1204503998]
+layout_mode = 2
+text = "More(?)"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer" unique_id=1217699452]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer" unique_id=1788441545]
+layout_mode = 2
+theme_override_constants/separation = 50
+alignment = 2
+
+[node name="Apply" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer" unique_id=1976951985]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+text = "Apply"
+
+[node name="Exit" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer" unique_id=382401302]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+text = "Exit"
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer/HBoxContainer" unique_id=1043332515]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer" unique_id=22667734]
+layout_mode = 2
+theme_override_constants/margin_bottom = 23
