@@ -1,33 +1,52 @@
 [gd_scene format=3 uid="uid://cfpeosla7ei55"]
 
-[ext_resource type="Script" uid="uid://cnjqpw6ug4mmo" path="res://Scenes/Levels/Test/Test.gd" id="1_vykkw"]
+[ext_resource type="PackedScene" uid="uid://blm7gnxbr6lb" path="res://Scenes/Characters/Player/Player.tscn" id="2_ux546"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_vykkw"]
+sky_top_color = Color(0.10462732, 0.056990787, 0.017390566, 1)
+sky_horizon_color = Color(0.09411765, 0.050980393, 0.14509805, 1)
+ground_bottom_color = Color(0, 0, 0, 1)
+ground_horizon_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Sky" id="Sky_ux546"]
+sky_material = SubResource("ProceduralSkyMaterial_vykkw")
+
+[sub_resource type="Environment" id="Environment_6rbyg"]
+background_mode = 2
+sky = SubResource("Sky_ux546")
+tonemap_mode = 3
+sdfgi_enabled = true
+sdfgi_use_occlusion = true
+sdfgi_read_sky_light = false
+glow_enabled = true
+volumetric_fog_enabled = true
+volumetric_fog_emission = Color(0.2620077, 0.2509762, 0.18233603, 1)
+volumetric_fog_emission_energy = 0.1
+volumetric_fog_length = 128.0
+adjustment_enabled = true
+adjustment_brightness = 1.3
 
 [node name="Test" type="Node3D" unique_id=870919375]
-script = ExtResource("1_vykkw")
 
-[node name="Label" type="Label" parent="." unique_id=1295334263]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 80
-text = "TEST"
-horizontal_alignment = 1
-vertical_alignment = 1
+[node name="Player" parent="." unique_id=2108788903 instance=ExtResource("2_ux546")]
 
-[node name="Button" type="Button" parent="." unique_id=1221940548]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -172.0
-offset_top = 49.0
-offset_right = 174.0
-offset_bottom = 165.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "Main Menu"
+[node name="WorldAndLighting" type="Node" parent="." unique_id=465062113]
 
-[connection signal="button_down" from="Button" to="." method="_on_button_button_down"]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="WorldAndLighting" unique_id=195241811]
+environment = SubResource("Environment_6rbyg")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldAndLighting" unique_id=24901374]
+transform = Transform3D(0.85142714, 0.33429557, -0.40412664, -0.15834075, -0.5707421, -0.8057181, -0.50000006, 0.75, -0.43301266, 0, 11.497938, 0)
+light_color = Color(0.09, 0.09, 0.09, 1)
+light_energy = 0.5
+light_indirect_energy = 0.5
+light_volumetric_fog_energy = 5.0
+shadow_enabled = true
+
+[node name="Enviornment" type="Node" parent="." unique_id=505027379]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Enviornment" unique_id=881242684]
+size = Vector3(50, 0.25, 50)
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1713944091]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.9009047, 17.461216)

@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://blm7gnxbr6lb"]
+
+[ext_resource type="PackedScene" uid="uid://q83g6v8ik7c5" path="res://Assets/Player/Arms/Armsv2.blend" id="1_no7dv"]
+[ext_resource type="Script" uid="uid://uj3fpyqghe2v" path="res://Core/Components/ComponentHandler.gd" id="2_8y2kw"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_8y2kw"]
+radius = 0.21044922
+height = 1.4
+
+[node name="Player" type="CharacterBody3D" unique_id=2108788903]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1066104797]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.71027, 0)
+shape = SubResource("CapsuleShape3D_8y2kw")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1765340268]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.349735, 0)
+current = true
+fov = 58.4
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Camera3D" unique_id=775134450]
+transform = Transform3D(0.99474937, 0, 0.10234114, 0, 1, 0, -0.10234114, 0, 0.99474937, 0.20011929, -0.52684486, -0.087008)
+light_color = Color(0.9466565, 0.9999998, 0.999824, 1)
+light_energy = 1.715
+light_volumetric_fog_energy = 0.1
+spot_range = 25.0
+spot_attenuation = 0.65
+spot_angle = 22.87
+spot_angle_attenuation = 3.105794
+
+[node name="Armsv2" parent="." unique_id=1262383485 instance=ExtResource("1_no7dv")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0.772248, 0)
+
+[node name="ComponentHandler" type="Node" parent="." unique_id=323979351]
+script = ExtResource("2_8y2kw")
+Components = Array[int]([0])
+metadata/_custom_type_script = "uid://uj3fpyqghe2v"
+
+[editable path="Armsv2"]

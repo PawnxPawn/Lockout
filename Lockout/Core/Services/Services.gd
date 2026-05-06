@@ -3,10 +3,13 @@ extends Node
 var game_state: GameState
 var scene_loader: SceneLoader
 var ui: UI
+var debug: Debug
 #var audio_services
 
 func _ready() -> void:
 	_register_services()
+	debug.add_debug_button("MainMenu", func(): scene_loader.load_scene(SceneLoader.Scenes.MAIN_MENU))
+	Services.debug.add_debug_label(&"GameState", game_state.GameStates.keys()[game_state.current_state])
 
 
 func _register_services() -> void:
@@ -15,6 +18,9 @@ func _register_services() -> void:
 	
 	scene_loader = SceneLoader.new()
 	ui = UI.new()
+	
+	debug = Debug.new()
+	add_child(debug)
 
 
 func set_ui_manager(ui_manager:Node):
