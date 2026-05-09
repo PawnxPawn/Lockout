@@ -1,7 +1,14 @@
 class_name Debug extends CanvasLayer
 
+enum { STATS, BUTTONS, OTHER}
+
+const DEBUG_SETTINGS = preload("uid://cgi4xbq515n1v")
+
+var debug_setting_instant: PanelContainer
+
 var labels: VBoxContainer
-var buttons: VBoxContainer
+var buttons: GridContainer
+var debug_controls: VBoxContainer
 
 var frame_tracker = 0
 
@@ -11,18 +18,43 @@ var properties: Dictionary
 func _ready() -> void:
 	visible = false
 	
+	_setup_debugger_nodes()
+
+
+func _setup_debugger_nodes() -> void:
 	var panel_container:PanelContainer = PanelContainer.new()
 	add_child(panel_container)
+	
 	
 	var container:VBoxContainer = VBoxContainer.new()
 	container.add_theme_constant_override("separation", 25)
 	panel_container.add_child(container)
 	
+	print(DEBUG_SETTINGS)
+	debug_setting_instant = DEBUG_SETTINGS.instantiate()
+	add_child(debug_setting_instant)
 	
 	labels = VBoxContainer.new()
 	container.add_child(labels)
-	buttons = VBoxContainer.new()
+	buttons = GridContainer.new()
+	buttons.columns = 2
+	buttons.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	container.add_child(buttons)
+	
+	var hseperator:HSeparator = HSeparator.new()
+	var style:StyleBoxLine = StyleBoxLine.new()
+	style.thickness = 8
+	style.color = Color(1.0,1.0,1.0,1.0)
+	hseperator.add_theme_stylebox_override("Debug", style)
+	container.add_child(hseperator)
+	
+	debug_controls = VBoxContainer.new()
+	container.add_child(debug_controls)
+	
+	var debug_settings_button:Button = Button.new()
+	debug_settings_button.text = "Debug Settings"
+	debug_settings_button.pressed.connect(func():debug_setting_instant.visible = not debug_setting_instant.visible)
+	container.add_child(debug_settings_button)
 
 
 func _input(event: InputEvent) -> void:
@@ -49,6 +81,7 @@ func add_debug_label(id: StringName, value: Variant, frames_before_updating: int
 	labels.add_child(property)
 	
 	properties[id] = property
+	_add_to_settings(id, property, STATS)
 
 
 func add_debug_button(id: StringName, connection: Callable, text: String = "") -> void:
@@ -59,9 +92,13 @@ func add_debug_button(id: StringName, connection: Callable, text: String = "") -
 	button.text = text if text else str(id)
 	button.add_theme_font_size_override("font_size", 25)
 	button.pressed.connect(connection)
+	button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	button.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	buttons.add_child(button)
 	
+	
 	properties[id] = button
+	_add_to_settings(id, button, BUTTONS)
 
 
 func remove_debug_property(id:StringName) -> void:
@@ -73,3 +110,38 @@ func remove_debug_property(id:StringName) -> void:
 
 func _get_id_value_string(id: StringName, value: Variant) -> String:
 	return "%s: %s" %[id, str(value)]
+
+
+func _add_to_settings(id: StringName, node:Node, type: Variant) -> void:
+	var location = _get_location(type)
+	
+	var check_box:CheckBox = CheckBox.new()
+	check_box.name = id
+	check_box.text = id
+	check_box.add_theme_font_size_override("font_size", 40)
+	check_box.button_pressed = node.visible
+	location.add_child(check_box)
+	check_box.button_down.connect(_check_box_pressed.bind(node))
+
+
+func _remove_from_settings(id: StringName, type: Variant) -> void:
+	var location:GridContainer = _get_location(type)
+	if location.get_children().has(id):
+		var node = location.find_child(id)
+		node.queue_free()
+
+
+func _check_box_pressed(node:Node) -> void:
+	node.visible = not node.visible
+
+
+func _get_location(type: Variant) -> GridContainer:
+	var location_container: GridContainer = null
+	match type:
+		STATS:
+			location_container = debug_setting_instant.labels_container
+		BUTTONS:
+			location_container = debug_setting_instant.button_container
+		_:
+			location_container = debug_setting_instant.other_container
+	return location_container

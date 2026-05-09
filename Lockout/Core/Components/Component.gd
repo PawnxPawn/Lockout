@@ -2,25 +2,29 @@ class_name Component extends RefCounted
 
 var _owner: Node
 
-func _init(owner:Node) ->void:
-	_owner = owner
+func _init(p_owner:Node) ->void:
+	_owner = p_owner
 
 
-func enter_tree() -> void:
+func process(_delta: float) -> void:
 	pass
 
 
-func _ready() -> void:
+func physics_process(_delta: float) -> void:
 	pass
 
 
-func frame_update() -> void:
+func input(_event: InputEvent) -> void:
 	pass
 
 
-func physics_update() -> void:
+func unhandled_input(_event: InputEvent) -> void:
 	pass
 
 
-func exit_tree() -> void:
+func paused() -> void:
+	pass
+
+
+func unpaused() -> void:
 	pass

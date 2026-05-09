@@ -8,8 +8,7 @@ var debug: Debug
 
 func _ready() -> void:
 	_register_services()
-	debug.add_debug_button("MainMenu", func(): scene_loader.load_scene(SceneLoader.Scenes.MAIN_MENU))
-	Services.debug.add_debug_label(&"GameState", game_state.GameStates.keys()[game_state.current_state])
+	debug.add_debug_label(&"GameState", game_state.GameStates.keys()[game_state.current_state])
 
 
 func _register_services() -> void:
