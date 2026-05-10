@@ -19,13 +19,19 @@ var current_state: GameStates
 var elapsed_time: float = 0.0
 
 func _process(delta: float) -> void:
+	Services.debug.add_debug_label(&"FPS", Engine.get_frames_per_second(), 20)
 	if _state_check(GameStates.PLAYING):
 		elapsed_time += delta
-
+		Services.debug.add_debug_label(&"ElapsedTime", "%02d:%02d:%02d" % [
+			int(elapsed_time / 3600),
+			int(elapsed_time / 60) % 60,
+			int(elapsed_time) % 60
+		])
 func change_game_state(new_state: GameStates) -> void:
 	if _state_check(new_state): return
 	
 	current_state = new_state
+	Services.debug.add_debug_label(&"GameState", GameStates.keys()[current_state])
 	game_state_changed.emit(new_state)
 	_on_state_changed(new_state)
 
@@ -35,6 +41,7 @@ func _on_state_changed(new_state: GameStates) -> void:
 		GameStates.STARTUP:
 			_startup_state()
 		GameStates.MAIN_MENU:
+			Services.debug.add_debug_button(&"MainMenu", func(): Services.scene_loader.load_scene(SceneLoader.Scenes.MAIN_MENU))
 			_main_menu_state()
 		GameStates.PLAYING:
 			_playing_state()
@@ -51,10 +58,12 @@ func _startup_state() -> void:
 
 
 func _main_menu_state() -> void:
+	Services.debug.remove_debug_property("ElapsedTime")
 	get_tree().paused = false
 
 
 func _playing_state() -> void:
+	Services.debug.add_debug_label("ElapsedTime", "%02d:%02d:%02d" % [int(elapsed_time / 60.0), int(elapsed_time) % 60, int(fmod(elapsed_time, 1.0) * 100)])
 	get_tree().paused = false
 
 

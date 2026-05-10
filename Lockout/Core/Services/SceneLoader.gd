@@ -25,12 +25,19 @@ var _loaded_scenes:Dictionary = {}
 func load_scene(scene:Scenes, transition: bool = true) -> void:
 	if not scene_manager:
 		push_error("SceneLoader: %s can't load because SceneManager is not set.")
+		return
+	
 	if transition:
 		is_transitioning = true
 		_swap_scene(scene)
 		
 		transition = false
 		is_transitioning = false
+		Services.debug.add_debug_label("ScenesLoaded", (func() -> Array:
+			var arr = []
+			for i in _loaded_scenes:
+				arr.append(Scenes.keys()[i])
+			return arr).call())
 		return
 	
 	_add_to_scene(scene)

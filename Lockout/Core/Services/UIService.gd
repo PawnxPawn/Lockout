@@ -50,7 +50,6 @@ func hide_all_uis() -> void:
 	if not _ui_manager_check() or _active_uis.is_empty(): return
 	
 	for ui in _active_uis:
-		print(ui)
 		_active_uis[ui].visible = false
 		ui_hidden.emit(ui)
 	
