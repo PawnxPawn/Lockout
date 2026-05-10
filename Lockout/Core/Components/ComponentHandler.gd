@@ -1,55 +1,26 @@
 class_name ComponentHandler extends Node
 
-@export var component_list: ComponentList
+@export var component_list: Defaults
 var component_map: Dictionary = {}
 
 func _ready() -> void:
 	if not component_list: return
 	
-	for key in component_list.component_type:
-		var component = Components.create(key, owner)
-		if component:
-			add_component(component)
+	for key in component_list.components:
+		add_and_create_component(key)
 
 
-#region Component Life-Cycle
-func _process(delta: float) -> void:
-	for component in component_map.values():
-		component.process(delta)
+func _create_component(type: ComponentsUtil.ComponentType) -> Component:
+	var component = ComponentsUtil.create(type, get_owner(), self) 
+	return component
 
 
-func _physics_process(delta: float) -> void:
-	for component in component_map.values():
-		component.physics_process(delta)
-
-
-func _input(event: InputEvent) -> void:
-	for component in component_map.values():
-		component.input(event)
-
-
-func _unhandled_input(event: InputEvent) -> void:
-	for component in component_map.values():
-		component.unhandled_input(event)
-
-
-func _notification(what: int) -> void:
-	match what:
-		NOTIFICATION_READY:
-			for component in component_map.values():
-				component.ready()
-		NOTIFICATION_PAUSED:
-			for component in component_map.values():
-				component.paused()
-		NOTIFICATION_UNPAUSED:
-			for component in component_map.values():
-				component.unpaused()
-		NOTIFICATION_PREDELETE:
-			component_map.clear()
-#endregion
-
-
-func add_component(component:Component) -> void:
+func add_and_create_component(type:ComponentsUtil.ComponentType) -> Component:
+	var component = _create_component(type)
+	
+	if not component:
+		push_error("ComponentHandler: Failed to create cmponent: %s" % ComponentsUtil.ComponentType.keys()[type])
+	
 	var script = component.get_script()
 	
 	var parent_script: Script = script.get_base_script()
@@ -60,19 +31,47 @@ func add_component(component:Component) -> void:
 		parent_script = parent_script.get_base_script()
 	
 	var script_name: StringName = script.get_global_name()
-	var key: Components.component_type = Components.get_component_type(script_name)
+	var key: ComponentsUtil.ComponentType= ComponentsUtil.get_component_type(script_name)
+	
+	if not ComponentsUtil.is_valid(key):
+		push_error("ComponentHandler: Key failed to set : %s" % script.get_global_name())
 	
 	if not component_map.has(key):
 		component_map[key] = component
+	
+	return component
+	
 
 
-func remove_component(component_type: Components.component_type) -> void:
+func remove_component(component_type: ComponentsUtil.ComponentType) -> void:
 	component_map.erase(component_type)
 
 
-func has_component(component_type: Components.component_type)  -> bool:
+func has_component(component_type: ComponentsUtil.ComponentType)  -> bool:
 	return component_map.has(component_type)
 
 
-func get_component(component_type:Components.component_type) -> Component:
+func get_component(component_type:ComponentsUtil.ComponentType) -> Component:
 	return component_map.get(component_type)
+
+
+#Component Life-Cycle
+func _process(delta: float) -> void:
+	for component in component_map.values():
+		if component.is_active:
+			component.process(delta)
+
+func _physics_process(delta: float) -> void:
+	for component in component_map.values():
+		if component.is_active:
+			component.physics_process(delta)
+
+func _input(event: InputEvent) -> void:
+	for component in component_map.values():
+		if component.is_active:
+			component.input(event)
+
+func _unhandled_input(event: InputEvent) -> void:
+	for component in component_map.values():
+		if component.is_active:
+			component.unhandled_input(event)

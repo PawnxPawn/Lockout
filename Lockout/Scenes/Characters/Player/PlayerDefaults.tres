@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="ComponentList" format=3 uid="uid://cc2rv65nxei0k"]
+
+[ext_resource type="Script" uid="uid://dbnw5eli5t5ry" path="res://Core/Resources/Defaults.gd" id="1_6ebyo"]
+
+[resource]
+script = ExtResource("1_6ebyo")
+components = Array[int]([1, 3])
+metadata/_custom_type_script = "uid://dbnw5eli5t5ry"

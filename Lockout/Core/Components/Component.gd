@@ -1,9 +1,12 @@
 class_name Component extends RefCounted
 
 var _owner: Node
+var _handler: ComponentHandler
+var is_active: bool = false
 
-func _init(p_owner:Node) ->void:
+func _init(p_owner:Node, p_component_handler: ComponentHandler) ->void:
 	_owner = p_owner
+	_handler = p_component_handler
 
 
 func process(_delta: float) -> void:

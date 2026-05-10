@@ -34,12 +34,13 @@ func _setup_debugger_nodes() -> void:
 	debug_setting_instant = DEBUG_SETTINGS.instantiate()
 	add_child(debug_setting_instant)
 	
-	labels = VBoxContainer.new()
-	container.add_child(labels)
-	buttons = GridContainer.new()
-	buttons.columns = 2
-	buttons.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	container.add_child(buttons)
+	debug_controls = VBoxContainer.new()
+	container.add_child(debug_controls)
+	
+	var debug_settings_button:Button = Button.new()
+	debug_settings_button.text = "Debug Settings"
+	debug_settings_button.pressed.connect(func():debug_setting_instant.visible = not debug_setting_instant.visible)
+	container.add_child(debug_settings_button)
 	
 	var hseperator:HSeparator = HSeparator.new()
 	var style:StyleBoxLine = StyleBoxLine.new()
@@ -48,13 +49,12 @@ func _setup_debugger_nodes() -> void:
 	hseperator.add_theme_stylebox_override("Debug", style)
 	container.add_child(hseperator)
 	
-	debug_controls = VBoxContainer.new()
-	container.add_child(debug_controls)
-	
-	var debug_settings_button:Button = Button.new()
-	debug_settings_button.text = "Debug Settings"
-	debug_settings_button.pressed.connect(func():debug_setting_instant.visible = not debug_setting_instant.visible)
-	container.add_child(debug_settings_button)
+	labels = VBoxContainer.new()
+	container.add_child(labels)
+	buttons = GridContainer.new()
+	buttons.columns = 2
+	buttons.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	container.add_child(buttons)
 
 
 func _input(event: InputEvent) -> void:
