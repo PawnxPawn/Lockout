@@ -2,17 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c2xq0kj60681e"
-path.s3tc="res://.godot/imported/UvUnwrap.png-921cc20f668b6ba62be46c8ad72d3369.s3tc.ctex"
+uid="uid://cn36lmisghbgw"
+path.s3tc="res://.godot/imported/LevelMaterials_unnamed_8.png-c70fa245ffe13825fb4e9141ca82f67b.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
+generator_parameters={
+"md5": "d9c10e2b2b2b724b16aa7511a6a54245"
+}
 
 [deps]
 
-source_file="res://Assets/Creature/UvUnwrap.png"
-dest_files=["res://.godot/imported/UvUnwrap.png-921cc20f668b6ba62be46c8ad72d3369.s3tc.ctex"]
+source_file="res://Assets/Envirements/LevelMaterials_unnamed_8.png"
+dest_files=["res://.godot/imported/LevelMaterials_unnamed_8.png-c70fa245ffe13825fb4e9141ca82f67b.s3tc.ctex"]
 
 [params]
 
