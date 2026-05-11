@@ -17,3 +17,5 @@ data_*/
 mono_crash.*.json
 
 Lockout/addons/Todo_Manager/
+
+Lockout/addons/script_splitter/
