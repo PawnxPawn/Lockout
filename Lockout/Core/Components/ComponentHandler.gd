@@ -1,13 +1,16 @@
 class_name ComponentHandler extends Node
 
-@export var component_list: Defaults
+@export var default_components: Array[ComponentsUtil.ComponentType]
 var component_map: Dictionary = {}
 
 func _ready() -> void:
-	if not component_list: return
+	if not default_components: return
 	
-	for key in component_list.components:
+	for key in default_components:
 		add_and_create_component(key)
+	
+	for component in component_map.values():
+		component.ready()
 
 
 func _create_component(type: ComponentsUtil.ComponentType) -> Component:
@@ -16,7 +19,7 @@ func _create_component(type: ComponentsUtil.ComponentType) -> Component:
 
 
 func add_and_create_component(type:ComponentsUtil.ComponentType) -> Component:
-	var component = _create_component(type)
+	var component:Component = _create_component(type)
 	
 	if not component:
 		push_error("ComponentHandler: Failed to create cmponent: %s" % ComponentsUtil.ComponentType.keys()[type])

@@ -9,6 +9,7 @@ enum ComponentType {
 	NONE,
 	CAMERA,
 	INPUT_SOURCE,
+	LOOK,
 	PLAYER_INPUT,
 }
 
@@ -24,6 +25,10 @@ const COMPONENT_DATA = {
 	ComponentType.INPUT_SOURCE: {
 		Field.NAME: &"InputSource",
 		Field.PATH: &"uid://5b7xcl2gqdey",
+	},
+	ComponentType.LOOK: {
+		Field.NAME: &"LookComponent",
+		Field.PATH: &"uid://bspc0ucuc08ip",
 	},
 	ComponentType.PLAYER_INPUT: {
 		Field.NAME: &"PlayerInput",
@@ -49,6 +54,7 @@ static func get_path(type: ComponentType) -> String:
 
 static func is_valid(type: ComponentType) -> bool:
 	return type != ComponentType.NONE and COMPONENT_DATA.has(type)
+
 
 static func create(type:ComponentType, p_owner: Node, handler: ComponentHandler) -> Component:
 	var path = get_path(type)
