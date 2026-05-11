@@ -15,7 +15,6 @@ var last_state: State:
 	get: return _last_state
 
 
-
 func init(component_handler: ComponentHandler,states: Array[State], initial_state: StringName = &"") -> void:
 	for state in states:
 		var script:Script = state.get_script()
