@@ -30,7 +30,6 @@ func _setup_debugger_nodes() -> void:
 	container.add_theme_constant_override("separation", 25)
 	panel_container.add_child(container)
 	
-	print(DEBUG_SETTINGS)
 	debug_setting_instant = DEBUG_SETTINGS.instantiate()
 	add_child(debug_setting_instant)
 	

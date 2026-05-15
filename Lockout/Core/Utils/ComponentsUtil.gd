@@ -10,6 +10,7 @@ enum ComponentType {
 	CAMERA,
 	INPUT_SOURCE,
 	LOOK,
+	MOVE,
 	PLAYER_INPUT,
 }
 
@@ -29,6 +30,10 @@ const COMPONENT_DATA = {
 	ComponentType.LOOK: {
 		Field.NAME: &"LookComponent",
 		Field.PATH: &"uid://bspc0ucuc08ip",
+	},
+	ComponentType.MOVE: {
+		Field.NAME: &"MoveComponent",
+		Field.PATH: &"uid://chvfc2ghjnp2v",
 	},
 	ComponentType.PLAYER_INPUT: {
 		Field.NAME: &"PlayerInput",

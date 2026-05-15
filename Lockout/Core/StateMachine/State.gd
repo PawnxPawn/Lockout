@@ -5,8 +5,8 @@ var _owner: Node
 var _handler: ComponentHandler
 var _input: InputSource
 var _look: LookComponent
-#var _movement: MoveComponent
-	
+var _movement: MoveComponent
+
 func _setup(sm: StateMachine, parent: Node, handler: ComponentHandler) -> void:
 	_sm = sm
 	_owner = parent
@@ -15,6 +15,8 @@ func _setup(sm: StateMachine, parent: Node, handler: ComponentHandler) -> void:
 		_input = _handler.get_component(ComponentsUtil.ComponentType.INPUT_SOURCE)
 	if _handler.has_component(ComponentsUtil.ComponentType.LOOK):
 		_look = _handler.get_component(ComponentsUtil.ComponentType.LOOK)
+	if _handler.has_component(ComponentsUtil.ComponentType.MOVE):
+		_movement = _handler.get_component(ComponentsUtil.ComponentType.MOVE)
 
 func enter() -> void:
 	pass

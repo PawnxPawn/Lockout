@@ -8,6 +8,7 @@ var _new_look_direction: Vector2 = Vector2.ZERO
 func ready() -> void:
 	change_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
+
 func process(delta: float) -> void:
 	look_direction = _new_look_direction
 	_new_look_direction = Vector2.ZERO
@@ -32,6 +33,7 @@ func input(event: InputEvent) -> void:
 		_owner.get_tree().quit()
 	if event is InputEventMouseMotion:
 		_new_look_direction = (event.screen_relative * PIXEL_SCALE) * mouse_sensitivity
+
 
 func change_mouse_mode(mouse_mode) -> void:
 	Input.mouse_mode = mouse_mode

@@ -29,6 +29,7 @@ adjustment_brightness = 1.3
 [node name="Test" type="Node3D" unique_id=870919375]
 
 [node name="Player" parent="." unique_id=2108788903 instance=ExtResource("2_ux546")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.07233983, 0)
 
 [node name="WorldAndLighting" type="Node" parent="." unique_id=465062113]
 
@@ -47,4 +48,5 @@ shadow_enabled = true
 
 [node name="CSGBox3D" type="CSGBox3D" parent="Enviornment" unique_id=881242684]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.016955614, 0)
+use_collision = true
 size = Vector3(50, 0.25, 50)

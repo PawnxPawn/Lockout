@@ -22,7 +22,8 @@ func add_and_create_component(type:ComponentsUtil.ComponentType) -> Component:
 	var component:Component = _create_component(type)
 	
 	if not component:
-		push_error("ComponentHandler: Failed to create cmponent: %s" % ComponentsUtil.ComponentType.keys()[type])
+		push_error("ComponentHandler: Failed to create component: %s" % ComponentsUtil.ComponentType.keys()[type])
+		return
 	
 	var script = component.get_script()
 	
@@ -43,7 +44,6 @@ func add_and_create_component(type:ComponentsUtil.ComponentType) -> Component:
 		component_map[key] = component
 	
 	return component
-	
 
 
 func remove_component(component_type: ComponentsUtil.ComponentType) -> void:
