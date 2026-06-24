@@ -48,13 +48,13 @@ func _move_char3d(direction:Vector3, _delta: float) -> void:
 	body.move_and_slide()
 
 
-func _move_rigid3d(direction:Vector3, delta: float):
+func _move_rigid3d(direction:Vector3, _delta: float):
 	var body: CharacterBody3D = _owner as CharacterBody3D
 	if direction:
 		body.velocity = direction * move_speed
 
 
-func _move_transform3d(direction:Vector3, delta: float):
+func _move_transform3d(direction:Vector3, _delta: float):
 	var body: CharacterBody3D = _owner as CharacterBody3D
 	if direction:
 		body.velocity = direction * move_speed

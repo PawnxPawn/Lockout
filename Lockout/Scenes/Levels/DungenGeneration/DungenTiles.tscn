@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://dgt6pnkouyxpi"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_riqys"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sn0t7"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mtryb"]
+albedo_color = Color(0.37254903, 0.23921569, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_q1lxn"]
+albedo_color = Color(0.8539598, 0.94772536, 0.18394956, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h5ci5"]
+albedo_color = Color(1, 0, 0, 1)
+
+[node name="DungenTiles" type="Node3D" unique_id=460574871]
+
+[node name="RoomTile" type="MeshInstance3D" parent="." unique_id=1094261960]
+mesh = SubResource("BoxMesh_riqys")
+surface_material_override/0 = SubResource("StandardMaterial3D_sn0t7")
+
+[node name="HallwayTile" type="MeshInstance3D" parent="." unique_id=194572865]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0129086, 0.00036916137, 0.00569126)
+mesh = SubResource("BoxMesh_riqys")
+surface_material_override/0 = SubResource("StandardMaterial3D_mtryb")
+
+[node name="DoorTile" type="MeshInstance3D" parent="." unique_id=1091973172]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.024065, 0.0037733912, 0.0133605)
+mesh = SubResource("BoxMesh_riqys")
+surface_material_override/0 = SubResource("StandardMaterial3D_q1lxn")
+
+[node name="BorderTile" type="MeshInstance3D" parent="." unique_id=1722294323]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.0391665, 0.0014511645, 0.007941052)
+mesh = SubResource("BoxMesh_riqys")
+surface_material_override/0 = SubResource("StandardMaterial3D_h5ci5")

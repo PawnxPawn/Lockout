@@ -1,6 +1,9 @@
 [gd_scene format=3 uid="uid://cfpeosla7ei55"]
 
+[ext_resource type="ArrayMesh" uid="uid://3lxit0ysx7el" path="res://Assets/Props/Flashlight.obj" id="2_nudtw"]
 [ext_resource type="PackedScene" uid="uid://blm7gnxbr6lb" path="res://Scenes/Characters/Player/Player.tscn" id="2_ux546"]
+[ext_resource type="PackedScene" uid="uid://b1j0ev0id7u6c" path="res://Assets/Creature/LowpolyMonsterMesh.tscn" id="3_cq3rf"]
+[ext_resource type="PackedScene" uid="uid://cd5ayvgt0p02" path="res://Assets/Envirements/LevelMaterials.glb" id="4_7uidu"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_vykkw"]
 sky_top_color = Color(0.10462732, 0.056990787, 0.017390566, 1)
@@ -50,3 +53,13 @@ shadow_enabled = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.016955614, 0)
 use_collision = true
 size = Vector3(50, 0.25, 50)
+
+[node name="Flashlight" type="MeshInstance3D" parent="Enviornment" unique_id=1910152537]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.6891818, 0.1637339, -3.1486983)
+mesh = ExtResource("2_nudtw")
+
+[node name="LowpolyMonsterMesh" parent="Enviornment" unique_id=2007304152 instance=ExtResource("3_cq3rf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.935002, 1.4493692, -15.846264)
+
+[node name="LevelMaterials" parent="Enviornment" unique_id=2018264091 instance=ExtResource("4_7uidu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.1845832, 0.14195538, -8.190853)
