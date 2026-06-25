@@ -45,15 +45,15 @@ func generate():
 	var rpv2 : PackedVector2Array =[]
 	var del_graph : AStar2D = AStar2D.new()
 	var mst_graph : AStar2D = AStar2D.new()
-	
+	var idx := 0
 	for p in room_positions:
-		rpv2.append(Vector2(p.x,p.z))
-		del_graph.add_point(del_graph.get_available_point_id(),Vector2(p.x,p.z))
-		mst_graph.add_point(del_graph.get_available_point_id(),Vector2(p.x,p.z))
-	
+		rpv2.append(Vector2(p.x, p.z))
+		del_graph.add_point(idx, Vector2(p.x,p.z))
+		mst_graph.add_point(idx, Vector2(p.x,p.z))
+		idx += 1
 	var delaunay : Array = Array(Geometry2D.triangulate_delaunay(rpv2))
 	
-	for i in (delaunay.size() / 3):
+	for i in int(delaunay.size() / 3):
 		var p1 : int = delaunay.pop_front()
 		var p2 : int = delaunay.pop_front()
 		var p3:int = delaunay.pop_front()
@@ -124,14 +124,13 @@ func create_hallways(hallway_graph:AStar2D):
 		
 	for h in hallways:
 		var pos_from : Vector2i = Vector2i(h[0].x, h[0].z)
-		var pos_to : Vector2i = Vector2i(h[1].x, 	h[1].z)
+		var pos_to : Vector2i = Vector2i(h[1].x, h[1].z)
 		var hall : PackedVector2Array = astar.get_point_path(pos_from,pos_to)
 		
 		for t in hall:
 			var pos : Vector3i = Vector3i(t.x, 0, t.y)
 			if grid_map.get_cell_item(pos) < 0:
 				grid_map.set_cell_item(pos, 1)
-				
 func make_room(rec:int):
 	if !rec>0:
 		return

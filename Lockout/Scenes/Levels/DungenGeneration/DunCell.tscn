@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://gysfglvgntcu"]
+
+[ext_resource type="Script" uid="uid://cgilsgilvxgp2" path="res://DunCell.gd" id="1_mpdd1"]
+
+[node name="DunCell" type="Node3D" unique_id=256718758]
+script = ExtResource("1_mpdd1")
