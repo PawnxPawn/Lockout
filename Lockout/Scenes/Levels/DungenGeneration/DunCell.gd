@@ -14,7 +14,7 @@ func remove_wall_right():
 	$Wallright.free()
 
 func remove_door_up():
-	$DoorUp.free()
+		$DoorUp.free()
 
 func remove_door_down():
 	$DoorDown.free()

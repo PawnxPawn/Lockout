@@ -2,20 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cn36lmisghbgw"
-path.s3tc="res://.godot/imported/LevelMaterials_unnamed_8.png-c70fa245ffe13825fb4e9141ca82f67b.s3tc.ctex"
+uid="uid://b1kph2ci8jw7n"
+path.s3tc="res://.godot/imported/Duncell_backrooms.png-f6ec1b9c213af8e8adcc409db9d78af8.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "86241674fbf64a19c37ae15a821fe1e6"
+"md5": "0bc32761f445228eb8daa513183f0ec8"
 }
 
 [deps]
 
-source_file="res://Assets/Envirements/LevelMaterials_unnamed_8.png"
-dest_files=["res://.godot/imported/LevelMaterials_unnamed_8.png-c70fa245ffe13825fb4e9141ca82f67b.s3tc.ctex"]
+source_file="res://Assets/Envirements/Duncell_backrooms.png"
+dest_files=["res://.godot/imported/Duncell_backrooms.png-f6ec1b9c213af8e8adcc409db9d78af8.s3tc.ctex"]
 
 [params]
 

@@ -26,9 +26,16 @@ func physics_process(delta: float) -> void:
 
 func _get_direction_3d() -> Vector3:
 	if _input_source:
-		return _input_source.move_direction
+		var raw: Vector3 = _input_source.move_direction
+		if raw == Vector3.ZERO:
+			return Vector3.ZERO
+			
+		var yaw: float = _input_source.look_direction.x
+		var forward: Vector3 = Vector3(sin(yaw), 0, cos(yaw))
+		var right: Vector3 = Vector3(cos(yaw), 0, -sin(yaw))
+		var world_dir: Vector3 = (right * raw.x + forward * -raw.z).normalized()
+		return (forward * -raw.z + right * raw.x).normalized()
 	return Vector3.ZERO
-
 
 func _move_char3d(direction:Vector3, _delta: float) -> void:
 	var body: CharacterBody3D = _owner as CharacterBody3D

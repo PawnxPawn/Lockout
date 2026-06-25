@@ -5,7 +5,7 @@ extends Node3D
 @onready var grid_map : GridMap = get_node(grid_map_path)
 
 @export var start : bool = false : set = set_start
-var dun_cell_scene : PackedScene = preload("res://Scenes/Levels/DungenGeneration/DunCell.tscn")
+var dun_cell_scene : PackedScene = preload("res://Scenes/Levels/DungenGeneration/DunCell.blend")
 func set_start(val:bool)->void:
 	if Engine.is_editor_hint():
 		create_dungeon()
