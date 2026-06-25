@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://gysfglvgntcu"]
+
+[ext_resource type="PackedScene" path="res://Assets/Envirements/DunCell.blend" id="1_85l1j"]
+[ext_resource type="Script" uid="uid://gapaln61o24u" path="res://Scenes/Levels/DungenGeneration/DunCell.gd" id="2_k27or"]
+
+[node name="DunCell" unique_id=1697609850 instance=ExtResource("1_85l1j")]
+script = ExtResource("2_k27or")
