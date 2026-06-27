@@ -1,7 +1,11 @@
 [gd_scene format=3 uid="uid://gysfglvgntcu"]
 
-[ext_resource type="PackedScene" path="res://Assets/Envirements/DunCell.blend" id="1_85l1j"]
+[ext_resource type="PackedScene" uid="uid://5xsl63wq85e6" path="res://Scenes/Levels/DungenGeneration/DunCell.blend" id="1_mpdd1"]
 [ext_resource type="Script" uid="uid://gapaln61o24u" path="res://Scenes/Levels/DungenGeneration/DunCell.gd" id="2_k27or"]
 
-[node name="DunCell" unique_id=1697609850 instance=ExtResource("1_85l1j")]
+[node name="DunCell" unique_id=1691326320 instance=ExtResource("1_mpdd1")]
 script = ExtResource("2_k27or")
+
+[node name="WallDown" parent="." index="2" unique_id=683548194]
+transform = Transform3D(-0.9999814, 0, 0.0060831457, 0, 1, 0, -0.0060831457, 0, -0.9999814, 8.00645, -0.0005493164, -0.05775976)
+rotation_order = 0

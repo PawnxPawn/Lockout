@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://b1kph2ci8jw7n"
-path.s3tc="res://.godot/imported/Duncell_backrooms.png-f6ec1b9c213af8e8adcc409db9d78af8.s3tc.ctex"
+path.s3tc="res://.godot/imported/DunCell_backrooms.png-8b1dd1b33f4eb80a8dcc7298a919dfee.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -14,8 +14,8 @@ generator_parameters={
 
 [deps]
 
-source_file="res://Assets/Envirements/Duncell_backrooms.png"
-dest_files=["res://.godot/imported/Duncell_backrooms.png-f6ec1b9c213af8e8adcc409db9d78af8.s3tc.ctex"]
+source_file="res://Scenes/Levels/DungenGeneration/textures/DunCell_backrooms.png"
+dest_files=["res://.godot/imported/DunCell_backrooms.png-8b1dd1b33f4eb80a8dcc7298a919dfee.s3tc.ctex"]
 
 [params]
 
