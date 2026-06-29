@@ -1,60 +1,82 @@
 class_name MoveComponent extends Component
 
-var movement_call: Callable
+signal velocity_zeroed
 
-var move_speed: float = 5.0
-var gravity: float = 9.8
+var speed: float = 230.0
+var slow_down_speed: float = 20.0
+var _direction: float = 0.0
+var _last_direction: float = 0.0
+const MAX_SPEED: float = 150.0
 
-var _input_source: InputSource
+func _on_moved2D(direction: float) -> void:
+	if _owner is CharacterBody2D:
+		_move_char2d(direction)
+	elif _owner is RigidBody2D:
+		_direction = direction
 
-func ready() -> void:
+
+func _on_moved3d(direction: Vector2) -> void:
 	if _owner is CharacterBody3D:
-		movement_call = _move_char3d
-	elif _owner is RigidBody3D:
-		movement_call = _move_rigid3d
-	else:
-		movement_call = _move_transform3d
-	
-	if _handler.has_component(ComponentsUtil.ComponentType.INPUT_SOURCE):
-		_input_source = _handler.get_component(ComponentsUtil.ComponentType.INPUT_SOURCE)
+		_move_char3d(direction)
 
 
-func physics_process(delta: float) -> void:
-	var direction: Vector3 = _get_direction_3d()
-	movement_call.call(direction, delta)
+func _move_char2d(direction: float) -> void:
+	var body := _owner as CharacterBody2D
+	if not body: return
+	body.velocity.x = direction * speed
+	if body.velocity.x == 0.0:
+		velocity_zeroed.emit()
+	body.move_and_slide()
 
 
-func _get_direction_3d() -> Vector3:
-	if _input_source:
-		return _input_source.move_direction
-	return Vector3.ZERO
-
-
-func _move_char3d(direction:Vector3, _delta: float) -> void:
+func _move_char3d(direction:Vector2) -> void:
 	var body: CharacterBody3D = _owner as CharacterBody3D
-	var direction_fall: Vector3
+	var forward_direction: Vector2
 	
 	if direction:
-		direction_fall = direction * move_speed
+		forward_direction = direction * speed
 	else:
-		direction_fall.x = move_toward(body.velocity.x, 0, move_speed)
-		direction_fall.z = move_toward(body.velocity.z, 0, move_speed)
+		forward_direction.x = move_toward(body.velocity.x, 0, speed)
+		forward_direction.y = move_toward(body.velocity.z, 0, speed)
 	
-	if not body.is_on_floor():
-		direction_fall.y -= gravity
-	
-	body.velocity = direction_fall
+	body.velocity = Vector3(forward_direction.x, 0 ,forward_direction.y)
 	
 	body.move_and_slide()
 
 
-func _move_rigid3d(direction:Vector3, delta: float):
-	var body: CharacterBody3D = _owner as CharacterBody3D
-	if direction:
-		body.velocity = direction * move_speed
+func _move_node2d(direction: Vector2) -> void:
+	var body := _owner as Node2D
+	if not body: return
+	body.position += direction * speed * body.get_process_delta_time()
 
 
-func _move_transform3d(direction:Vector3, delta: float):
-	var body: CharacterBody3D = _owner as CharacterBody3D
-	if direction:
-		body.velocity = direction * move_speed
+func _move_node3d(direction:Vector3):
+	var body := _owner as Node3D
+	if not body: return
+	body.position += direction * speed * body.get_process_delta_time()
+
+
+func integrate_forces2D(state: PhysicsDirectBodyState2D) -> void:
+	if signf(_direction) != signf(_last_direction) and _last_direction != 0.0:
+		state.linear_velocity.x = 0.0
+
+	_last_direction = _direction
+
+	if _direction != 0.0:
+		if absf(state.linear_velocity.x) < MAX_SPEED:
+			state.linear_velocity.x += _direction * speed
+		return
+
+	if absf(state.linear_velocity.x) > 1.0:
+		var brake := signf(-state.linear_velocity.x) * slow_down_speed
+		if absf(brake) >= absf(state.linear_velocity.x):
+			state.linear_velocity.x = 0.0
+			velocity_zeroed.emit()
+		else:
+			state.linear_velocity.x += brake
+		return
+
+	state.linear_velocity.x = 0.0
+	velocity_zeroed.emit()
+
+#TODO: Add integrate_forces3D

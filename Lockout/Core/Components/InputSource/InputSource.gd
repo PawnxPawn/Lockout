@@ -1,9 +1,10 @@
-class_name InputSource extends Component
+@abstract class_name InputSource extends Component
 
-var move_direction: Vector3 = Vector3.ZERO
-var look_direction: Vector2 = Vector2.ZERO
-
-var is_jumping: bool = false
-var is_interacting:bool = false
-var is_sprinting: bool = false
-var is_inventory: bool = false
+signal moved(direction:Vector2)
+signal look_direction_changed(direction:Vector2)
+signal jump_pressed
+signal jump_released
+signal sprinting_pressed
+signal sprinting_released
+signal interacted_pressed
+signal inventory_pressed

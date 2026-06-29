@@ -2,29 +2,43 @@ class_name PlayerInput extends InputSource
 
 const PIXEL_SCALE:float = 0.002
 
-var mouse_sensitivity = Vector2(0.50, 0.25)
+var _mouse_sensitivity = Vector2(0.50, 0.25)
+var _look_direction: Vector2 = Vector2.ZERO
 var _new_look_direction: Vector2 = Vector2.ZERO
+
 
 func ready() -> void:
 	change_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 
-func process(delta: float) -> void:
-	look_direction = _new_look_direction
+func process(_delta: float) -> void:
+	_look_direction = _new_look_direction
 	_new_look_direction = Vector2.ZERO
-	_process_move(delta)
-	_process_input(delta)
+	_process_move()
+	_process_input()
 
 
-func _process_move(_delta:float) -> void:
+func _process_move() -> void:
 	var move_input: Vector2 = Input.get_vector(&"Move_Left",&"Move_Right", &"Move_Forward", &"Move_Backward")
-	move_direction = Vector3(move_input.x, 0 , move_input.y)
+	moved.emit(move_input)
 
 
-func _process_input(_delta:float) -> void:
-	is_sprinting = Input.is_action_pressed(&"Sprint")
-	is_interacting = Input.is_action_just_pressed(&"Interact")
-	is_inventory = Input.is_action_just_pressed(&"Inventory")
+func _process_input() -> void:
+	if Input.is_action_just_pressed(&"Jump"):
+		jump_pressed.emit()
+	if Input.is_action_just_released(&"Jump"):
+		jump_released.emit()
+	
+	if Input.is_action_just_pressed(&"Sprint"):
+		sprinting_pressed.emit()
+	if Input.is_action_just_released(&"Sprint"):
+		sprinting_released.emit()
+	
+	if Input.is_action_just_pressed(&"Interact"):
+		interacted_pressed.emit()
+	
+	if Input.is_action_just_pressed(&"Inventory"):
+		inventory_pressed.emit()
 
 
 func input(event: InputEvent) -> void:
@@ -32,7 +46,9 @@ func input(event: InputEvent) -> void:
 	if event.is_action_pressed(&"ui_cancel"):
 		_owner.get_tree().quit()
 	if event is InputEventMouseMotion:
-		_new_look_direction = (event.screen_relative * PIXEL_SCALE) * mouse_sensitivity
+		var look_direction = (event.screen_relative * PIXEL_SCALE) * _mouse_sensitivity
+		look_direction_changed.emit(look_direction)
+		
 
 
 func change_mouse_mode(mouse_mode) -> void:

@@ -1,10 +1,12 @@
-class_name Component extends RefCounted
+@abstract class_name Component extends RefCounted
+
 
 signal activated
 signal deactivated
 
+var name:StringName = &""
+
 var _owner: Node
-var _handler: ComponentHandler
 var is_active: bool = false:
 	set(value):
 		is_active = value
@@ -13,9 +15,8 @@ var is_active: bool = false:
 		else:
 			deactivated.emit()
 
-func _init(p_owner:Node, p_component_handler: ComponentHandler) ->void:
+func _init(p_owner:Node,) ->void:
 	_owner = p_owner
-	_handler = p_component_handler
 	activated.connect(_on_activated)
 	deactivated.connect(_on_deactivated)
 
@@ -36,6 +37,10 @@ func physics_process(_delta: float) -> void:
 	pass
 
 
+func integrate_forces(_state: PhysicsDirectBodyState2D) -> void:
+	pass
+
+
 func input(_event: InputEvent) -> void:
 	pass
 
@@ -49,6 +54,10 @@ func paused() -> void:
 
 
 func unpaused() -> void:
+	pass
+
+
+func exit() -> void:
 	pass
 
 
