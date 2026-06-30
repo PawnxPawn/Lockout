@@ -1,72 +1,111 @@
 @tool
 extends Node3D
-@export var grid_map_path : NodePath
-@onready var grid_map : GridMap = get_node(grid_map_path)
-@export var start : bool = false : set = set_start
-var dun_cell_scene : PackedScene = preload("res://Scenes/Levels/DungenGeneration/DunCell.tscn")
-func set_start(_val:bool)->void:
+
+@export var grid_map_path: NodePath
+@onready var grid_map: GridMap = get_node(grid_map_path)
+
+@export var start: bool = false:
+	set = set_start
+
+const DUN_CELL_SCENE: PackedScene = preload("res://Scenes/Levels/DungenGeneration/DunCell.tscn")
+
+const DIRECTIONS := {
+	"up": Vector3i(0, 0, -1),
+	"down": Vector3i(0, 0, 1),
+	"left": Vector3i(-1, 0, 0),
+	"right": Vector3i(1, 0, 0)
+}
+
+const OPPOSITES := {
+	"up": "down",
+	"down": "up",
+	"left": "right",
+	"right": "left"
+}
+
+const DIR_ORDER: Array[String] = [
+	"up",
+	"right",
+	"down",
+	"left"
+]
+
+
+func set_start(_value: bool) -> void:
 	if Engine.is_editor_hint():
 		create_dungeon()
-var directions : Dictionary = {
-	"up" : Vector3i.FORWARD, "down" : Vector3i.BACK,
-	"left" : Vector3i.LEFT, "right" : Vector3i.RIGHT
-}
-func handle_none(cell:Node3D, dir:String):
-	cell.call("remove_door_"+dir)
-func handle_00(cell:Node3D, dir:String):
-	cell.call("remove_wall_"+dir)
-	cell.call("remove_door_"+dir)
-func handle_01(cell:Node3D, dir:String):
-	cell.call("remove_wall_"+dir)
-	cell.call("remove_door_"+dir)
-func handle_02(cell:Node3D, dir:String):
-	cell.call("remove_wall_"+dir)
-	cell.call("remove_door_"+dir)
-func handle_10(cell:Node3D, dir:String):
-	cell.call("remove_wall_"+dir)
-	cell.call("remove_door_"+dir)
-func handle_11(cell:Node3D, dir:String):
-	cell.call("remove_wall_"+dir)
-	cell.call("remove_door_"+dir)
-func handle_12(cell:Node3D, dir:String):
-	cell.call("remove_wall_"+dir)
-	cell.call("remove_door_"+dir)
-func handle_20(cell:Node3D, dir:String):
-	cell.call("remove_wall_"+dir)
-	cell.call("remove_door_"+dir)
-func handle_21(cell:Node3D, dir:String):
-	cell.call("remove_wall_"+dir)
-func handle_22(cell:Node3D, dir:String):
-	cell.call("remove_wall_"+dir)
-	cell.call("remove_door_"+dir)
-func create_dungeon():
-	for c in get_children():
-		remove_child(c)
-		c.queue_free()
-	var t : int = 0
-	for cell in grid_map.get_used_cells():
-		var cell_index : int = grid_map.get_cell_item(cell)
-		if cell_index >= 0 && cell_index <= 2:
-			var dun_cell : Node3D = dun_cell_scene.instantiate()
-			dun_cell.position = grid_map.map_to_local(cell)
-			add_child(dun_cell)
-			t += 1
-			
-			var orientation : int = grid_map.get_cell_item_orientation(cell)
-			var basis : Basis = grid_map.get_basis_with_orthogonal_index(orientation)
-			
-			for dir_name in directions.keys():
-				var raw_dir : Vector3i = directions[dir_name]
-				var rotated_dir : Vector3i = Vector3i(basis * Vector3(raw_dir))
-				var cell_n : Vector3i = cell + rotated_dir
-				var cell_n_index : int = grid_map.get_cell_item(cell_n)
-				
-				if cell_n_index == -1 || cell_n_index == 3:
-					handle_none(dun_cell, dir_name)
-				else:
-					var key : String = str(cell_index) + str(cell_n_index)
-					if has_method("handle_" + key):
-						call("handle_" + key, dun_cell, dir_name)
-		
-		if t % 10 == 9:
-			await get_tree().create_timer(0).timeout
+
+
+func should_keep_door(cell_index: int, neighbour_index: int) -> bool:
+	return (
+		(cell_index == 2 and neighbour_index == 1)
+		or (cell_index == 1 and neighbour_index == 2)
+	)
+
+
+func clear_dungeon() -> void:
+	for child: Node in get_children():
+		remove_child(child)
+		child.queue_free()
+
+
+func create_dungeon() -> void:
+
+	clear_dungeon()
+
+	# Wait one frame in-game so queued nodes are actually removed.
+	if !Engine.is_editor_hint():
+		await get_tree().process_frame
+
+	var rooms: Dictionary = {}
+	var room_types: Dictionary = {}
+
+	for cell: Vector3i in grid_map.get_used_cells():
+
+		var cell_index: int = grid_map.get_cell_item(cell)
+
+		if cell_index < 0 or cell_index > 2:
+			continue
+
+		var room: Node3D = DUN_CELL_SCENE.instantiate() as Node3D
+
+		room.position = grid_map.map_to_local(cell)
+
+		add_child(room)
+
+		rooms[cell] = room
+		room_types[cell] = cell_index
+
+	for key: Variant in rooms.keys():
+
+		var cell: Vector3i = key as Vector3i
+		var room: Node3D = rooms[cell] as Node3D
+		var cell_index: int = room_types[cell] as int
+
+		for dir_name: String in DIR_ORDER:
+
+			var offset: Vector3i = DIRECTIONS[dir_name] as Vector3i
+			var neighbour_cell: Vector3i = cell + offset
+
+			var neighbour_index: int = grid_map.get_cell_item(neighbour_cell)
+
+			# Exterior
+			if neighbour_index == -1 or neighbour_index == 3:
+				room.call("remove_door_" + dir_name)
+				continue
+
+			# Interior
+			room.call("remove_wall_" + dir_name)
+
+			if !should_keep_door(cell_index, neighbour_index):
+				room.call("remove_door_" + dir_name)
+
+			if rooms.has(neighbour_cell):
+
+				var neighbour: Node3D = rooms[neighbour_cell] as Node3D
+				var opposite: String = OPPOSITES[dir_name] as String
+
+				neighbour.call("remove_wall_" + opposite)
+
+				if !should_keep_door(neighbour_index, cell_index):
+					neighbour.call("remove_door_" + opposite)
