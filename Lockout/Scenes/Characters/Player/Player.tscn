@@ -2,8 +2,15 @@
 
 [ext_resource type="Script" uid="uid://7aetd2bwo742" path="res://Scenes/Characters/Player/Player.gd" id="1_7vix2"]
 [ext_resource type="PackedScene" uid="uid://q83g6v8ik7c5" path="res://Assets/Player/Arms/Armsv2.blend" id="1_no7dv"]
-[ext_resource type="Script" uid="uid://uj3fpyqghe2v" path="res://Core/Components/ComponentHandler.gd" id="2_8y2kw"]
-[ext_resource type="Script" uid="uid://cgduh0h7grupy" path="res://Core/StateMachine/StateMachine.gd" id="4_7vix2"]
+[ext_resource type="Script" uid="uid://uj3fpyqghe2v" path="res://Core/Systems/ComponentHandler.gd" id="2_8y2kw"]
+[ext_resource type="Script" uid="uid://cgduh0h7grupy" path="res://Core/Systems/StateMachine.gd" id="4_7vix2"]
+[ext_resource type="Script" uid="uid://bgsj8gw2nmanw" path="res://Core/Components/InputSource/PlayerInput.gd" id="4_gu5w3"]
+[ext_resource type="Script" uid="uid://ch5wra7y1gllq" path="res://Core/Components/CameraComponent.gd" id="5_ov5rv"]
+[ext_resource type="Script" uid="uid://ckkpqo3bx8v2t" path="res://Core/Components/GravityComponent.gd" id="6_p3isv"]
+[ext_resource type="Script" uid="uid://bspc0ucuc08ip" path="res://Core/Components/LookComponent.gd" id="7_m81am"]
+[ext_resource type="Script" uid="uid://chvfc2ghjnp2v" path="res://Core/Components/MoveComponent.gd" id="8_n0syu"]
+[ext_resource type="Script" uid="uid://dd0hhf1ndit0j" path="res://Core/States/Player/PlayerIdleState.gd" id="10_m81am"]
+[ext_resource type="Script" uid="uid://curn3k3c5dk1f" path="res://Core/States/Player/PlayerMoveState.gd" id="11_n0syu"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_8y2kw"]
 radius = 0.21044922
@@ -32,12 +39,25 @@ transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0
 [node name="ComponentHandler" type="Node" parent="." unique_id=323979351]
 unique_name_in_owner = true
 script = ExtResource("2_8y2kw")
-default_components = Array[int]([5, 1, 3, 4])
+default_components = Array[Script]([ExtResource("4_gu5w3"), ExtResource("5_ov5rv"), ExtResource("6_p3isv"), ExtResource("7_m81am"), ExtResource("8_n0syu")])
 metadata/_custom_type_script = "uid://uj3fpyqghe2v"
 
 [node name="StateMachine" type="Node" parent="." unique_id=247942602]
 unique_name_in_owner = true
 script = ExtResource("4_7vix2")
+state_scripts = Array[GDScript]([ExtResource("10_m81am"), ExtResource("11_n0syu")])
 metadata/_custom_type_script = "uid://cgduh0h7grupy"
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=253936492]
+custom_minimum_size = Vector2(10, 10)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 
 [editable path="Armsv2"]

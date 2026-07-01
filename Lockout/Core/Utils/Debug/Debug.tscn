@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://7271mamvy6iu"]
 
 [ext_resource type="Script" uid="uid://c4smtx7w6xf0n" path="res://Core/Utils/Debug/Debug.gd" id="1_1h0gc"]
-[ext_resource type="Script" uid="uid://uj3fpyqghe2v" path="res://Core/Components/ComponentHandler.gd" id="2_7qpxa"]
+[ext_resource type="Script" uid="uid://uj3fpyqghe2v" path="res://Core/Systems/ComponentHandler.gd" id="2_7qpxa"]
 
 [node name="Debug" type="CanvasLayer" unique_id=644835301]
 process_mode = 3
