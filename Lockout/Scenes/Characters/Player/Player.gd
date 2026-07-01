@@ -47,5 +47,3 @@ func _setup_camera() -> void:
 
 func _physics_process(_delta: float) -> void:
 	camera.set_rotation(look.pitch, look.yaw, 0)
-	print(camera.camera.rotation)
-	print(rotation)

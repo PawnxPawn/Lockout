@@ -35,12 +35,12 @@ func _move_char3d(direction: Vector2) -> void:
 		var input_dir: Vector3 = Vector3(direction.x, 0, direction.y)
 		var facing_direction: Vector3 = _owner.global_transform.basis * input_dir
 		facing_direction = facing_direction.normalized()
-		forward_direction = facing_direction * speed
+		forward_direction = facing_direction * speed *  _owner.get_physics_process_delta_time()
 	else:
 		forward_direction.x = move_toward(body.velocity.x, 0, speed)
 		forward_direction.z = move_toward(body.velocity.z, 0, speed)
 	
-	body.velocity = Vector3(forward_direction.x, body.velocity.y, forward_direction.z) * _owner.get_physics_process_delta_time()
+	body.velocity = Vector3(forward_direction.x, body.velocity.y, forward_direction.z)
 	
 	if is_zero_approx(body.velocity.x) and is_zero_approx(body.velocity.z):
 		velocity_zeroed.emit()
