@@ -50,3 +50,15 @@ shadow_enabled = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.016955614, 0)
 use_collision = true
 size = Vector3(50, 0.25, 50)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Enviornment" unique_id=1718526925]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.442642, 5.1419554, 0)
+size = Vector3(5, 10, 5)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="Enviornment" unique_id=1263213358]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.354481, 5.1419554, 0)
+size = Vector3(5, 10, 5)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="Enviornment" unique_id=39599929]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.354481, 5.1419554, 12.656752)
+size = Vector3(5, 10, 5)

@@ -9,6 +9,7 @@ func _setup(sm: StateMachine, parent: Node, handler: ComponentHandler) -> void:
 	_owner = parent
 	_handler = handler
 
+
 @abstract func enter() -> void
 
 

@@ -2,6 +2,8 @@ class_name PlayerInput extends InputSource
 
 const PIXEL_SCALE:float = 0.002
 
+var direction: Vector2 = Vector2.ZERO
+
 var _mouse_sensitivity = Vector2(0.50, 0.25)
 var _look_direction: Vector2 = Vector2.ZERO
 var _new_look_direction: Vector2 = Vector2.ZERO
@@ -19,8 +21,10 @@ func process(_delta: float) -> void:
 
 
 func _process_move() -> void:
-	var move_input: Vector2 = Input.get_vector(&"Move_Left",&"Move_Right", &"Move_Forward", &"Move_Backward")
-	moved.emit(move_input)
+	var new_direction: Vector2 = Input.get_vector(&"Move_Left",&"Move_Right", &"Move_Forward", &"Move_Backward")
+	if new_direction != direction:
+		direction = new_direction
+		moved.emit(direction)
 
 
 func _process_input() -> void:

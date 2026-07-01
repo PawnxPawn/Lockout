@@ -9,7 +9,7 @@ var pitch: float = 0.0
 var yaw: float = 0.0
 
 func _on_look(direction: Vector2) -> void:
-	pitch = clamp(pitch - direction.y, PITCH_CLAMP_TOP, PITCH_CLAMP_BOTTOM)
+	pitch = clamp(pitch - direction.y, PITCH_CLAMP_BOTTOM, PITCH_CLAMP_TOP)
 	yaw -= direction.x
 	
 	yaw_changed.emit(yaw)

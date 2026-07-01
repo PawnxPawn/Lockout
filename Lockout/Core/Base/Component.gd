@@ -4,8 +4,6 @@
 signal activated
 signal deactivated
 
-var name:StringName = &""
-
 var _owner: Node
 var is_active: bool = false:
 	set(value):

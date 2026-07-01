@@ -24,7 +24,8 @@ func set_position(position: Vector3) -> void:
 
 
 func set_rotation(pitch:float, yaw:float, roll:float) -> void:
-	camera.rotation = Vector3(pitch, yaw, roll)
+	camera.rotation = Vector3(pitch, 0, roll)
+	_owner.rotation.y = yaw
 
 
 func make_current() -> void:

@@ -30,7 +30,7 @@ func _init(p_owner: Node) -> void:
 		body.can_sleep = false
 
 func physics_process(_delta: float) -> void:
-	if _owner is CharacterBody2D or _owner is CharacterBody2D:
+	if _owner is CharacterBody2D or _owner is CharacterBody3D:
 		apply_characterbody_gravity()
 
 
@@ -61,8 +61,7 @@ func apply_characterbody_gravity() -> void:
 			grounded.emit()
 			return
 	var gravity: float = gravity_ascent if _owner.velocity.y < 0.0 else gravity_descent
-	_owner.velocity.y += gravity
-	_owner.move_and_slide()
+	_owner.velocity.y -= gravity * _owner.get_physics_process_delta_time()
 
 
 func rigid2d_apply_gravity(state:PhysicsDirectBodyState2D) -> void:

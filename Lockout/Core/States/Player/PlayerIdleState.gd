@@ -1,19 +1,24 @@
-class_name PlayerIdleState extends State
+extends State
+
+var state_name:StringName = &"IdleState"
 
 func enter() -> void:
-	set_up_components()
+	connect_components()
 
 
 func exit() -> void:
 	disconnect_components()
 
 
-func set_up_components() -> void:
-	var _input: InputSource = _handler.get_component(InputSource)
-	if _input:
-		_handler.set_active(InputSource, true)
-		_input.moved.connect(transition_to.bind("MoveState"))
+func _moved(_direction:Vector2) -> void:
+	transition_to("MoveState")
+
+
+func connect_components() -> void:
+	if _owner.input:
+		_owner.input.moved.connect(_moved)
 
 
 func disconnect_components() -> void:
-	pass
+	if _owner.input:
+		_owner.input.moved.disconnect(_moved)

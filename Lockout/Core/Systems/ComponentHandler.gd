@@ -66,6 +66,9 @@ func _process(delta: float) -> void:
 func _physics_process(delta: float) -> void:
 	for component in _active_components:
 		component.physics_process(delta)
+		var handler_owner: Node = get_owner()
+		if handler_owner is CharacterBody3D:
+			handler_owner.move_and_slide()
 
 func _input(event: InputEvent) -> void:
 	for component in _active_components:
