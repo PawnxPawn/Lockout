@@ -1,6 +1,11 @@
 @tool
 extends Node3D
 
+signal generated
+
+@export var player: Node3D
+var _player_mode: Node.ProcessMode = Node.PROCESS_MODE_INHERIT
+
 @onready var grid_map : GridMap = $GridMap
 
 func _get_grid_map() -> GridMap:
@@ -8,10 +13,30 @@ func _get_grid_map() -> GridMap:
 		grid_map = get_node_or_null("GridMap")
 	return grid_map
 
+
+func _ready() -> void:
+	if Engine.is_editor_hint():
+		return
+	# Freeze the player until the dungeon (and its collision) exists.
+	_find_player()
+	if player:
+		_player_mode = player.process_mode
+		player.process_mode = Node.PROCESS_MODE_DISABLED
+	var dun_mesh := get_node_or_null("DunMesh")
+	if dun_mesh:
+		dun_mesh.built.connect(place_player)
+	generate()
+
+
 @export var start : bool = false: set = set_start
 func set_start(_val:bool)->void:
 	if Engine.is_editor_hint():
 		generate()
+		# In the editor the signals aren't connected, so run the chain by hand.
+		var dun_mesh := get_node_or_null("DunMesh")
+		if dun_mesh:
+			dun_mesh.create_dungeon()
+		place_player()
 
 var rooms: Array[Dictionary] = []
 
@@ -67,6 +92,7 @@ func generate() -> void:
 		make_room(room_recursion)
 
 	if room_positions.size() < 2:
+		push_warning("Dungeon: fewer than 2 rooms generated")
 		return
 
 	var rpv2 : PackedVector2Array = []
@@ -125,6 +151,32 @@ func generate() -> void:
 					hallway_graph.connect_points(p, c)
 
 	create_hallways(hallway_graph)
+	generated.emit()
+
+
+func _find_player() -> void:
+	if player == null:
+		player = get_node_or_null("Player") as Node3D
+
+
+func place_player() -> void:
+	_find_player()
+	if player == null:
+		push_warning("DunGen: Player field is empty, assign the Player node in the Inspector")
+		return
+	if room_tiles.is_empty():
+		return
+	# Spawn in the middle of the first room, well away from the walls.
+	var tiles: PackedVector3Array = room_tiles[0]
+	var cell := Vector3i(tiles[tiles.size() / 2])
+	var pos := grid_map.to_global(grid_map.map_to_local(cell))
+	player.global_position = pos + Vector3(0, 1.0, 0)
+	if "velocity" in player:
+		player.velocity = Vector3.ZERO
+	# Let physics register the new bodies before the player starts moving.
+	if !Engine.is_editor_hint():
+		await get_tree().physics_frame
+	player.process_mode = _player_mode
 
 
 func create_hallways(hallway_graph: AStar2D) -> void:

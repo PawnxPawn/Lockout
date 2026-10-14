@@ -7,6 +7,8 @@ extends Node3D
 @export var start: bool = false:
 	set = set_start
 
+signal built
+
 const DUN_CELL_SCENE: PackedScene = preload("res://Scenes/Levels/DungenGeneration/DunCell.tscn")
 
 const DIRECTIONS := {
@@ -31,16 +33,20 @@ const DIR_ORDER: Array[String] = [
 ]
 
 
+func _ready() -> void:
+	if Engine.is_editor_hint():
+		return
+	get_parent().generated.connect(create_dungeon)
+
+
 func set_start(_value: bool) -> void:
 	if Engine.is_editor_hint():
 		create_dungeon()
 
 
 func should_keep_door(cell_index: int, neighbour_index: int) -> bool:
-	return (
-		(cell_index == 2 and neighbour_index == 1)
-		or (cell_index == 1 and neighbour_index == 2)
-	)
+	# Only the door cell (2) keeps its door, facing the hallway (1).
+	return cell_index == 2 and neighbour_index == 1
 
 
 func clear_dungeon() -> void:
@@ -50,6 +56,10 @@ func clear_dungeon() -> void:
 
 
 func create_dungeon() -> void:
+	grid_map.visible = false
+	grid_map.collision_layer = 0
+	grid_map.collision_mask = 0
+	print("create_dungeon called, cells: ", grid_map.get_used_cells().size())
 
 	clear_dungeon()
 
@@ -60,6 +70,7 @@ func create_dungeon() -> void:
 	var rooms: Dictionary = {}
 	var room_types: Dictionary = {}
 
+	# Step 1: instantiate every cell but do NOT add it to the tree yet.
 	for cell: Vector3i in grid_map.get_used_cells():
 
 		var cell_index: int = grid_map.get_cell_item(cell)
@@ -69,13 +80,14 @@ func create_dungeon() -> void:
 
 		var room: Node3D = DUN_CELL_SCENE.instantiate() as Node3D
 
-		room.position = grid_map.map_to_local(cell)
-
-		add_child(room)
+		# Convert through global space so DunMesh and GridMap don't need identical transforms.
+		room.position = to_local(grid_map.to_global(grid_map.map_to_local(cell)))
 
 		rooms[cell] = room
 		room_types[cell] = cell_index
 
+	# Step 2: remove unneeded walls/doors while the cells are still out of the tree,
+	# so their physics bodies are never created.
 	for key: Variant in rooms.keys():
 
 		var cell: Vector3i = key as Vector3i
@@ -109,3 +121,9 @@ func create_dungeon() -> void:
 
 				if !should_keep_door(neighbour_index, cell_index):
 					neighbour.call("remove_door_" + opposite)
+
+	# Step 3: now add the trimmed cells to the tree.
+	for room: Node3D in rooms.values():
+		add_child(room)
+
+	built.emit()
