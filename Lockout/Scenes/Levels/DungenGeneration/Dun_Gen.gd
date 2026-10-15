@@ -161,21 +161,43 @@ func _find_player() -> void:
 
 func place_player() -> void:
 	_find_player()
+
 	if player == null:
-		push_warning("DunGen: Player field is empty, assign the Player node in the Inspector")
+		push_warning("DunGen: Player field is empty. Assign Player in the Inspector.")
 		return
-	if room_tiles.is_empty():
+
+	if rooms.is_empty() or grid_map == null:
+		push_warning("DunGen: No rooms available for spawning.")
 		return
-	# Spawn in the middle of the first room, well away from the walls.
-	var tiles: PackedVector3Array = room_tiles[0]
-	var cell := Vector3i(tiles[tiles.size() / 2])
-	var pos := grid_map.to_global(grid_map.map_to_local(cell))
-	player.global_position = pos + Vector3(0, 1.0, 0)
+
+	# Get the first room's actual dimensions.
+	var room: Dictionary = rooms[0]
+	var start: Vector3i = room["start"]
+	var width: int = room["width"]
+	var height: int = room["height"]
+
+	# Calculate a tile near the center of the room.
+	var spawn_cell := start + Vector3i(
+		int(width / 2),
+		0,
+		int(height / 2)
+	)
+
+	# Convert the GridMap cell position to world coordinates.
+	var spawn_position: Vector3 = grid_map.to_global(
+		grid_map.map_to_local(spawn_cell)
+	)
+
+	# Place the player above the floor.
+	player.global_position = spawn_position + Vector3.UP * 1.0
+
 	if "velocity" in player:
 		player.velocity = Vector3.ZERO
-	# Let physics register the new bodies before the player starts moving.
-	if !Engine.is_editor_hint():
+
+	# Wait for physics before allowing movement.
+	if not Engine.is_editor_hint():
 		await get_tree().physics_frame
+
 	player.process_mode = _player_mode
 
 
