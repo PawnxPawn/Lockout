@@ -17,6 +17,7 @@ radius = 0.21044922
 height = 1.0
 
 [node name="Player" type="CharacterBody3D" unique_id=2108788903]
+top_level = true
 script = ExtResource("1_7vix2")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1066104797]
@@ -24,17 +25,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 shape = SubResource("CapsuleShape3D_8y2kw")
 
 [node name="Flashlight" type="SpotLight3D" parent="." unique_id=775134450]
-transform = Transform3D(0.99474937, 0, 0.10234114, 0, 1, 0, -0.10234114, 0, 0.99474937, 0.21, 0.55, -0.087)
-light_color = Color(0.94509804, 1, 0.8627451, 1)
-light_energy = 1.87
-light_volumetric_fog_energy = 0.1
-spot_range = 25.0
-spot_attenuation = 0.65
+transform = Transform3D(0.99474937, 0, 0.10234112, 0, 1, 0, -0.10234112, 0, 0.99474937, 0.21, 0.55, -0.087)
+light_energy = 0.0
+light_indirect_energy = 0.0
+light_volumetric_fog_energy = 0.0
+light_bake_mode = 0
 spot_angle = 22.87
 spot_angle_attenuation = 3.105794
 
 [node name="Armsv2" parent="." unique_id=1262383485 instance=ExtResource("1_no7dv")]
 transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0.5, 0)
+
+[node name="Arm_001" parent="Armsv2/ArmRig_001/Skeleton3D" parent_id_path=PackedInt32Array(1262383485, 1554062499) index="0" unique_id=197825408]
+cast_shadow = 0
 
 [node name="ComponentHandler" type="Node" parent="." unique_id=323979351]
 unique_name_in_owner = true

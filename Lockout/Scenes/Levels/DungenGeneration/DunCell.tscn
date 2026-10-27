@@ -1,40 +1,8 @@
 [gd_scene format=3 uid="uid://gysfglvgntcu"]
 
-[ext_resource type="PackedScene" uid="uid://cknrrvvpym44t" path="res://Scenes/Levels/DungenGeneration/DunCell.glb" id="1_k27or"]
-[ext_resource type="Script" uid="uid://cgilsgilvxgp2" path="res://DunCell.gd" id="2_kgp2r"]
+[ext_resource type="PackedScene" uid="uid://bfkajbeu4jb6m" path="res://Scenes/Levels/DungenGeneration/DunCell.glb" id="1_mpdd1"]
+[ext_resource type="Script" uid="uid://cmw3cp6d422f1" path="res://Scenes/Levels/DungenGeneration/DunCell.gd" id="2_k27or"]
 
-[node name="DunCell" unique_id=1026088429 instance=ExtResource("1_k27or")]
-script = ExtResource("2_kgp2r")
-
-[node name="CollisionShape3D" parent="Ceiling/StaticBody3D" parent_id_path=PackedInt32Array(2137187856) index="0" unique_id=999179617]
-debug_color = Color(0, 0.0039459253, 0.0056523527, 0)
-
-[node name="CollisionShape3D" parent="DoorDown/StaticBody3D" parent_id_path=PackedInt32Array(471300338) index="0" unique_id=765134840]
-debug_color = Color(0, 0.003921569, 0.003921569, 0)
-
-[node name="DoorLeft" parent="." index="2" unique_id=553035997]
-transform = Transform3D(-1.6292067e-07, 0, 0.99999994, 0, 1, 0, -0.99999994, 0, -1.6292067e-07, 3.922584, 0, 3.4176865)
-
-[node name="CollisionShape3D" parent="DoorLeft/StaticBody3D" parent_id_path=PackedInt32Array(842981591) index="0" unique_id=207420524]
-debug_color = Color(0, 0.003921569, 0.003921569, 0)
-
-[node name="CollisionShape3D" parent="DoorRight/StaticBody3D" parent_id_path=PackedInt32Array(1572759946) index="0" unique_id=474730103]
-debug_color = Color(0, 0.003921569, 0.003921569, 0)
-
-[node name="CollisionShape3D" parent="DoorUp/StaticBody3D" parent_id_path=PackedInt32Array(1718454378) index="0" unique_id=641908579]
-debug_color = Color(0, 0.003921569, 0.003921569, 0)
-
-[node name="CollisionShape3D" parent="Floor/StaticBody3D" parent_id_path=PackedInt32Array(1002817893) index="0" unique_id=1623344757]
-debug_color = Color(0, 0.003921569, 0.003921569, 0)
-
-[node name="CollisionShape3D" parent="WallDown/StaticBody3D" parent_id_path=PackedInt32Array(441116894) index="0" unique_id=2066357240]
-debug_color = Color(0, 0.003921569, 0.003921569, 0)
-
-[node name="CollisionShape3D" parent="WallLeft/StaticBody3D" parent_id_path=PackedInt32Array(1414528550) index="0" unique_id=384923198]
-debug_color = Color(0, 0.003921569, 0.003921569, 0)
-
-[node name="CollisionShape3D" parent="WallRight/StaticBody3D" parent_id_path=PackedInt32Array(1752209911) index="0" unique_id=460597541]
-debug_color = Color(0, 0.003921569, 0.003921569, 0)
-
-[node name="CollisionShape3D" parent="WallUp/StaticBody3D" parent_id_path=PackedInt32Array(1825569748) index="0" unique_id=873447101]
-debug_color = Color(0, 0.003921569, 0.003921569, 0)
+[node name="DunCell" unique_id=819502756 instance=ExtResource("1_mpdd1")]
+script = ExtResource("2_k27or")
+light_range = 5.0

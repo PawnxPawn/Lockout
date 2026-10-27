@@ -1,86 +1,110 @@
+
 class_name MoveComponent extends Component
 
 signal velocity_zeroed
+signal sprint_changed(is_sprinting: bool)
 
-const MAX_SPEED: float = 150.0
+const MAX_SPEED: float = 20.0
 
 var _input_direction: Vector2 = Vector2.ZERO
+var _was_moving: bool = false
+var _wants_sprint: bool = false
+var _is_sprinting: bool = false
+var _current_speed: float = 1.0
 
-var speed: float = 60.0
-var slow_down_speed: float = 20.0
+var speed: float = .5
+var sprint_speed: float = 2.0
+var acceleration: float = 2.0
+var slow_down_speed: float = 12.0
+var gravity: float = 20.0
 
 
-func physics_process(_delta: float) -> void:
-	if not is_active: return
-	_move_char3d(_input_direction)
+func physics_process(delta: float) -> void:
+	if not is_active:
+		return
+
+	_move_char3d(_input_direction, delta)
 
 
 func set_direction(direction: Vector2) -> void:
 	_input_direction = direction
 
 
-func _move_char2d(direction: Vector2) -> void:
-	var body := _owner as CharacterBody2D
-	if not body: return
-	body.velocity.x = direction.x * speed
-	if is_zero_approx(body.velocity.x):
-		velocity_zeroed.emit()
+func set_sprinting(value: bool) -> void:
+	_wants_sprint = value
 
 
-func _move_char3d(direction: Vector2) -> void:
-	var body: CharacterBody3D = _owner as CharacterBody3D
-	var forward_direction: Vector3
-	
-	if direction:
-		var input_dir: Vector3 = Vector3(direction.x, 0, direction.y)
-		var facing_direction: Vector3 = _owner.global_transform.basis * input_dir
-		facing_direction = facing_direction.normalized()
-		forward_direction = facing_direction * speed *  _owner.get_physics_process_delta_time()
+func _move_char3d(direction: Vector2, delta: float) -> void:
+	var body := _owner as CharacterBody3D
+	if not body:
+		return
+
+	# Only sprint while moving forward or sideways.
+	var can_sprint: bool = (
+		direction != Vector2.ZERO
+		and direction.y <= 0.0
+	)
+
+	var sprinting: bool = _wants_sprint and can_sprint
+
+	# Emit a signal when sprinting starts or stops.
+	if sprinting != _is_sprinting:
+		_is_sprinting = sprinting
+		sprint_changed.emit(_is_sprinting)
+
+	# Select walking or sprinting speed.
+	var target_speed: float = (
+		sprint_speed if _is_sprinting else speed
+	)
+
+	_current_speed = move_toward(
+		_current_speed,
+		target_speed,
+		acceleration * delta
+	)
+
+	# Apply movement relative to the character's facing direction.
+	if direction != Vector2.ZERO:
+		var input_dir := Vector3(
+			direction.x,
+			0.0,
+			direction.y
+		)
+
+		var world_dir := (
+			body.global_transform.basis * input_dir
+		).normalized()
+
+		body.velocity.x = world_dir.x * _current_speed
+		body.velocity.z = world_dir.z * _current_speed
 	else:
-		forward_direction.x = move_toward(body.velocity.x, 0, speed)
-		forward_direction.z = move_toward(body.velocity.z, 0, speed)
-	
-	body.velocity = Vector3(forward_direction.x, body.velocity.y, forward_direction.z)
-	
-	if is_zero_approx(body.velocity.x) and is_zero_approx(body.velocity.z):
-		velocity_zeroed.emit()
-	
+		# Gradually stop horizontal movement.
+		body.velocity.x = move_toward(
+			body.velocity.x,
+			0.0,
+			slow_down_speed * delta
+		)
+
+		body.velocity.z = move_toward(
+			body.velocity.z,
+			0.0,
+			slow_down_speed * delta
+		)
+
+	# Apply gravity while airborne.
+	if not body.is_on_floor():
+		body.velocity.y -= gravity * delta
+
+	# Move the character.
 	body.move_and_slide()
 
+	# Detect when horizontal movement stops.
+	var is_moving: bool = not (
+		is_zero_approx(body.velocity.x)
+		and is_zero_approx(body.velocity.z)
+	)
 
-func _move_node2d(direction: Vector2) -> void:
-	var body := _owner as Node2D
-	if not body: return
-	body.position += direction * speed * body.get_process_delta_time()
+	if _was_moving and not is_moving:
+		velocity_zeroed.emit()
 
-
-func _move_node3d(direction:Vector3):
-	var body := _owner as Node3D
-	if not body: return
-	body.position += direction * speed * body.get_process_delta_time()
-
-
-#func integrate_forces2D(state: PhysicsDirectBodyState2D) -> void:
-	#if signf(_direction) != signf(_last_direction) and _last_direction != 0.0:
-		#state.linear_velocity.x = 0.0
-#
-	#_last_direction = _direction
-#
-	#if _direction != 0.0:
-		#if absf(state.linear_velocity.x) < MAX_SPEED:
-			#state.linear_velocity.x += _direction * speedvv
-		#return
-#
-	#if absf(state.linear_velocity.x) > 1.0:
-		#var brake := signf(-state.linear_velocity.x) * slow_down_speed
-		#if absf(brake) >= absf(state.linear_velocity.x):
-			#state.linear_velocity.x = 0.0
-			#velocity_zeroed.emit()
-		#else:
-			#state.linear_velocity.x += brake
-		#return
-#
-	#state.linear_velocity.x = 0.0
-	#velocity_zeroed.emit()
-
-#TODO: Add integrate_forces3D
+	_was_moving = is_moving

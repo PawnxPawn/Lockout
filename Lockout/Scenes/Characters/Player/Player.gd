@@ -36,7 +36,7 @@ func _setup_sm() -> void:
 func _setup_camera() -> void:
 	camera = _handler.get_component(CameraComponent)
 	if not camera: return
-	var head_location = Vector3(0.0, 1.4, 0.0)
+	var head_location = Vector3(0.0, .8, 0.0)
 	camera.set_position(head_location)
 	
 	if not flashlight: return

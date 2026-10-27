@@ -1,10 +1,9 @@
+
 class_name PlayerInput extends InputSource
 
-const PIXEL_SCALE:float = 0.002
+const PIXEL_SCALE: float = 0.002
 
-var direction: Vector2 = Vector2.ZERO
-
-var _mouse_sensitivity = Vector2(0.50, 0.25)
+var _mouse_sensitivity := Vector2(0.50, 0.25)
 var _look_direction: Vector2 = Vector2.ZERO
 var _new_look_direction: Vector2 = Vector2.ZERO
 
@@ -21,38 +20,53 @@ func process(_delta: float) -> void:
 
 
 func _process_move() -> void:
-	var new_direction: Vector2 = Input.get_vector(&"Move_Left",&"Move_Right", &"Move_Forward", &"Move_Backward")
+	var new_direction: Vector2 = Input.get_vector(
+		&"Move_Left",
+		&"Move_Right",
+		&"Move_Forward",
+		&"Move_Backward"
+	)
+
 	if new_direction != direction:
 		direction = new_direction
 		moved.emit(direction)
 
 
 func _process_input() -> void:
+	# Jump input
 	if Input.is_action_just_pressed(&"Jump"):
 		jump_pressed.emit()
+
 	if Input.is_action_just_released(&"Jump"):
 		jump_released.emit()
-	
+
+	# Sprint input
 	if Input.is_action_just_pressed(&"Sprint"):
 		sprinting_pressed.emit()
+
 	if Input.is_action_just_released(&"Sprint"):
 		sprinting_released.emit()
-	
+
+	# Interaction input
 	if Input.is_action_just_pressed(&"Interact"):
 		interacted_pressed.emit()
-	
+
+	# Inventory input
 	if Input.is_action_just_pressed(&"Inventory"):
 		inventory_pressed.emit()
 
 
 func input(event: InputEvent) -> void:
-	#TODO: DELETE after pause menu is added
+	# TODO: DELETE after pause menu is added
 	if event.is_action_pressed(&"ui_cancel"):
 		_owner.get_tree().quit()
+
 	if event is InputEventMouseMotion:
-		var look_direction = (event.screen_relative * PIXEL_SCALE) * _mouse_sensitivity
+		var look_direction = (
+			event.screen_relative * PIXEL_SCALE
+		) * _mouse_sensitivity
+
 		look_direction_changed.emit(look_direction)
-		
 
 
 func change_mouse_mode(mouse_mode) -> void:
