@@ -135,55 +135,34 @@ func get_wall_height() -> float:
 ## that was at the bottom ends up at the top. Only meshes flip; collision stays put.
 ## extra_y nudges the result up (+) or down (-).
 
+
+
 func flip_walls_vertical(extra_y: float = 0.0) -> void:
-	var meshes := _wall_meshes()
+	var meshes: Array[MeshInstance3D] = _wall_meshes()
 	if meshes.is_empty():
 		return
 
-	var r := get_wall_range()
-	var center_y: float = (r.x + r.y) * 0.5
+	var wall_range: Vector2 = get_wall_range()
+	var center_y: float = (wall_range.x + wall_range.y) * 0.5
 
-	var flip := Transform3D(
-		Basis(Vector3.RIGHT, Vector3.DOWN, Vector3.BACK),
-		Vector3(0.0, 2.0 * center_y + extra_y, 0.0)
-	)
+	for mesh: MeshInstance3D in meshes:
+		var original: Transform3D = _xf_in_cell(mesh)
+		var flipped := original
 
-	for m: MeshInstance3D in meshes:
-		# Move collision objects out from under the mesh before flipping.
-		# Preserve their cell-relative transforms and clear stale ownership.
-		for node: Node in m.find_children(
-			"*", "CollisionObject3D", true, false
-		):
-			var body := node as Node3D
-			if body == null:
-				continue
+		flipped.basis = Basis(
+			Vector3.RIGHT,
+			Vector3.DOWN,
+			Vector3.BACK
+		) * original.basis
 
-			var old_parent := body.get_parent()
-			if old_parent == null:
-				continue
+		flipped.origin.y = 2.0 * center_y - original.origin.y + extra_y
 
-			var body_xf: Transform3D = _xf_in_cell(body)
+		var parent := mesh.get_parent() as Node3D
+		if parent == null:
+			continue
 
-			# Avoid the inconsistent-owner warning during reparenting.
-			body.owner = null
-
-			old_parent.remove_child(body)
-			add_child(body)
-
-			body.transform = body_xf
-
-		var parent_xf := Transform3D.IDENTITY
-		if m.get_parent() != self:
-			parent_xf = _xf_in_cell(m.get_parent() as Node3D)
-
-		m.transform = (
-			parent_xf.affine_inverse()
-			* flip
-			* _xf_in_cell(m)
-		)
-
-
-
+		mesh.transform = _xf_in_cell(parent).affine_inverse() * flipped
+		
 ## Debug: prints every child of the cell with its type and position.
 func print_tree_info() -> void:
 	for child: Node in get_children():
