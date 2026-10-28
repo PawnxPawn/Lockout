@@ -16,6 +16,7 @@ const ITEM_HALL := 1
 const ITEM_DOOR := 2
 const ITEM_BORDER := 3
 
+var hallway_count: int = 0
 
 func _get_grid_map() -> GridMap:
 	if grid_map == null:
@@ -24,6 +25,9 @@ func _get_grid_map() -> GridMap:
 
 
 func _ready() -> void:
+	DebugRegistry.watch("Rooms", rooms.size)
+	DebugRegistry.watch("Hallways", func(): return hallway_count)
+	
 	if Engine.is_editor_hint():
 		return
 	# Freeze the player until the dungeon (and its collision) exists.
@@ -70,8 +74,8 @@ func set_border_size(val: int) -> void:
 @export_multiline var custom_seed: String = "": set = set_seed
 func set_seed(val: String) -> void:
 	custom_seed = val
-	seed(val.hash())
-
+	var new_seed = val.hash()
+	seed(new_seed)
 
 var room_tiles: Array[PackedVector3Array] = []
 var room_positions: PackedVector3Array = []
@@ -364,6 +368,8 @@ func create_hallways(hallway_graph: AStar2D) -> void:
 			var pos := Vector3i(int(p2.x), 0, int(p2.y))
 			if grid_map.get_cell_item(pos) == GridMap.INVALID_CELL_ITEM:
 				grid_map.set_cell_item(pos, ITEM_HALL)
+	hallway_count = hallways.size()
+	print(hallway_count)
 
 
 func make_room(rec: int) -> void:

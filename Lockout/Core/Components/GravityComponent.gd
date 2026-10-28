@@ -58,8 +58,14 @@ func is_on_floor_check(state: PhysicsDirectBodyState2D) -> void:
 
 func apply_characterbody_gravity() -> void:
 	if _owner.is_on_floor():
+		if not _was_on_floor:
 			grounded.emit()
-			return
+		_was_on_floor = true
+		return
+	if _was_on_floor:
+		left_floor.emit()
+	_was_on_floor = false
+	
 	var gravity: float = gravity_ascent if _owner.velocity.y < 0.0 else gravity_descent
 	_owner.velocity.y -= gravity * _owner.get_physics_process_delta_time()
 

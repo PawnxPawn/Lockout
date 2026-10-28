@@ -8,8 +8,6 @@ var debug: Debug
 
 func _ready() -> void:
 	_register_services()
-	debug.add_debug_label(&"GameState", game_state.GameStates.keys()[game_state.current_state])
-
 
 func _register_services() -> void:
 	game_state = GameState.new()
@@ -17,10 +15,6 @@ func _register_services() -> void:
 	
 	scene_loader = SceneLoader.new()
 	ui = UI.new()
-	
-	debug = Debug.new()
-	add_child(debug)
-
 
 func set_ui_manager(ui_manager:Node):
 	ui.ui_manager = ui_manager
